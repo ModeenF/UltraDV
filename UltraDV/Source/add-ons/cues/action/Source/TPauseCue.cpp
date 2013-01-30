@@ -26,7 +26,9 @@
 #include "TCueView.h"
 #include "TCueChannel.h"
 #include "TPauseCue.h"
+// ABH does not exist
 #include "TPauseSetup.h"
+#include "TPlaybackEngine.h"
 #include "TTimer.h"
 #include "TBitmapView.h"
 
@@ -358,14 +360,19 @@ void TPauseCue::MessageReceived(BMessage *message)
 
 void TPauseCue::OpenEditor()
 {
+		printf("PauseSettingsWindow not implemented - see TPauseCue.cpp\n");
+#ifdef ABH
+
 	// If editor is already open, bring it to front
 	if (m_EditorOpen)
 	{
+
 		if (m_Editor)
 		{	
 			m_Editor->Show();
 			m_Editor->Activate(true);
 		}
+
 	}
 	else
 	{		
@@ -373,6 +380,7 @@ void TPauseCue::OpenEditor()
 		m_EditorOpen = true;
 		
 		BMessage *theMessage = GetWindowFromResource("PauseSettingsWindow");
+		ASSERT(theMessage);
 		m_Editor = new TPauseSetup(this, theMessage);
 		
 		if (m_Editor)
@@ -383,6 +391,8 @@ void TPauseCue::OpenEditor()
 		else
 			m_EditorOpen = false;
 	}
+#endif
+
 }
 
 
@@ -545,7 +555,7 @@ void TPauseCue::LoadCueIcon()
 	{
 		BRect area(0, 0+(kTimeTextHeight+kTimeTextOffset+3), kCueIconWidth-1, (kCueIconWidth-1)+(kTimeTextHeight+kTimeTextOffset+3));
 		area.OffsetBy(kResizeZoneWidth+5, 0);		
-		m_CueIcon = new TBitmapView(area, cueIcon, false);
+		m_CueIcon = new TBitmapView(area, "PauseCue",cueIcon, false);
 		AddChild(m_CueIcon);		
 	}	
 }

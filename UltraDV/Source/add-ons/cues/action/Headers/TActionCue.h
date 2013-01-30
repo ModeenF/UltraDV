@@ -15,7 +15,8 @@
 #pragma once
 
 // Forward Declarations
-class TCueView;
+// ABH class TCueView;
+#include "TCueView.h"
 
 // Class Definition
 class	TActionCue : public TCueView

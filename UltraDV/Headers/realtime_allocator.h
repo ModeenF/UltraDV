@@ -195,6 +195,11 @@ private:
 //	Specialize for void because there are no void references.
 //	I wanted template<class Type> class realtime_allocator<Type>::types<void>
 //	but that generated an internal compiler error in EGCS on 1998-10-28.
+// ABH error in next line
+
+//template<class Type> class realtime_allocator<Type>::types<void>;
+
+
 class realtime_allocator<void>::types<void> {
 public:
 	typedef void * pointer;

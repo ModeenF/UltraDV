@@ -888,3 +888,65 @@ bool AVIConsumer::InitAVIFile()
 	
 	return retVal;
 }
+
+// ABH added this
+
+//---------------------------------------------------------------------
+//	GetBitmapPixelSize
+//---------------------------------------------------------------------
+//
+//	Return size of bitmap pixle based on color space
+
+int32 AVIConsumer::GetBitmapPixelSize(color_space colorSpace)
+{
+	switch(colorSpace)
+	{
+		// Unused and non-values
+		case B_NO_COLOR_SPACE:
+		case B_RGB24:
+		case B_RGB24_BIG:
+		case B_YUV422:
+		case B_YUV411:
+		case B_YUV420:
+		case B_YUV444:
+		case B_YUV9:
+		case B_YUV12:
+			return(-1);
+			break;	
+		
+		// 32-bit
+			case B_RGB32:
+		case B_RGBA32:
+		case B_RGB32_BIG:
+		case B_RGBA32_BIG:
+			return sizeof(uint32);
+			break;
+		
+		// 16-bit
+		case B_RGB16:
+		case B_RGB15:
+		case B_RGBA15:
+		case B_RGB16_BIG:
+		case B_RGB15_BIG:
+		case B_RGBA15_BIG:
+			return sizeof(uint16);
+			break;
+			
+
+		// 8-bit
+		case B_CMAP8:
+		case B_GRAY8:
+			return sizeof(uchar);
+			break;
+
+		// Monochrome
+		case B_GRAY1:
+			return sizeof(uchar);
+			break;
+		
+		default:
+			return(-1);
+			break;
+		
+	}
+}

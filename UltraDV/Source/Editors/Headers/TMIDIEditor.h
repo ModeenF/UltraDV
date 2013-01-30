@@ -15,6 +15,7 @@
 
 #ifndef __TMIDIEditor__
 #define __TMIDIEditor__
+#include <interface/Window.h>
 
 // Constants
 const float kMIDIEditorHeight 	= 300;

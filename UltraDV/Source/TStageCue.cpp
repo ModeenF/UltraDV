@@ -18,7 +18,8 @@
 
 #include <app/Application.h>
 #include <support/Debug.h>
-#include <algobase.h>
+#include <algorithm>
+// ABH was #include <algobase.h>
 
 #include "AppConstants.h"
 #include "AppMessages.h"

@@ -16,7 +16,8 @@
 #include "BuildApp.h"
 
 #include <app/Application.h>
-#include <algobase.h>			// for min/max
+#include <algorithm>
+// ABH #include <algobase.h>			// for min/max
 #include <support/Debug.h>			
 
 #include "AppConstants.h"
@@ -121,6 +122,17 @@ TTransition::~TTransition()
 	}
 }
 
+// ABH missing functions
+#ifdef ABH
+bool TTransition::HasTransitionIn(){
+	return m_IsTransitionIn;	// ABH is this right???
+}
+
+bool TTransition::HasTransitionOut(){
+	return m_IsTransitionOut;
+}
+
+#endif
 
 //---------------------------------------------------------------------
 //	Init()

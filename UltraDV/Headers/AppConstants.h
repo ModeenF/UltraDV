@@ -101,7 +101,8 @@ const int16 kDurationDeltaOffset 	= 1;
 const int16	kItemOffscreenValue		= -500;
 const int16 kCueTitleHeight 		= 5;
 
-const enum actionCues
+// ABH const 
+enum actionCues
 {
 	kActionCue,
 	kButtonCue,
@@ -113,7 +114,8 @@ const enum actionCues
 	kTotalActionCues
 };
 
-const enum mediaCues
+//const 
+enum mediaCues
 {
 	kAnimationCue = kTotalActionCues,
 	kAudioCue,
@@ -126,14 +128,17 @@ const enum mediaCues
 };
 
 // Cursors
-const enum
+//const 
+enum
 {
 	kTestCursor,
 	kHResizeCursor
 };
 
 // Paths
-const char kPresetsPathString[] = "./add-ons/settings/presets/"; 	
+// ABH
+// old const char kPresetsPathString[] = "./add-ons/settings/presets/"; 
+const char kPresetsPathString[] = "/boot/home/config/settings/UltraDV/add-ons/settings/presets/";	
 
 // File Types
 const char kCueSheetTypeString[] = "application/x-mediapede-cuesheet";

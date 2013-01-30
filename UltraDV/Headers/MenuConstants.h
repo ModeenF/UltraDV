@@ -125,7 +125,8 @@ typedef enum
 
 
 //	Export Menu
-typedef enum
+// ABH typedef 
+enum
 {
 	kExportMenuItem = 1
 };

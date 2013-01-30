@@ -21,4 +21,4 @@
 #include "AppGlobals.h"
 
 // Globals
-extern MuseumApp *gMuseumApp;
+// ABH extern MuseumApp *gMuseumApp;

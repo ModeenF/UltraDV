@@ -20,6 +20,8 @@
 
 #include "AppTypes.h"
 #include "TUndo.h"
+// ABH added
+#include "BaseCueChunk.h"
 
 // Constants
 const int16 kResizeZoneWidth = 7;
@@ -40,10 +42,30 @@ class TCueEffectView;
 class TCueView : public BView, public BMediaNode
 {
 	public:
+		// ABH missing functions ???
+		uint32 GetDuration();
+	void SetTransitionInID(uint32);
+	void SetTransitionOutID(uint32);
+	void SetTransitionInDuration(uint32);
+	void SetTransitionOutDuration(uint32);
+	uint32 GetTransitionInDuration();
+	uint32 GetTransitionOutDuration();
+			
+//		void SetDuration(uint32);
+		float GetRotation();
+		void SetRotation(float);
+		void SetScale(BPoint);
+		BRect GetArea();
+		void SetScaledArea(BPoint);
+		BPoint GetScaledArea();
+		
 		// Member Functions
 		TCueView(int16 id, TCueChannel *parent, BRect bounds, uint32 startTime, char *name);
+		TCueView(int16 id, TCueChannel *parent, BRect bounds, BPoint startPoint, uint32 startTime, char *name);
 		TCueView(const TCueView *theCue);
 		TCueView(BMessage *data);
+		// ABH add missing prototype
+		TCueView(BaseCueChunk *theChunk, TCueChannel *parent, BRect bounds, char *name);
 		virtual ~TCueView();
 		
 		static	BArchivable *Instantiate(BMessage *data);
@@ -163,6 +185,7 @@ class TCueView : public BView, public BMediaNode
 					
 		// Member Functions
 		virtual void 	Init();
+		void Init(BaseCueChunk *);
 		
 		void			MouseDownControls(BPoint where);
 		void			MouseDragControls(BPoint where);
@@ -207,6 +230,17 @@ class TCueView : public BView, public BMediaNode
 		void 			RunRoutine();
 												
 		//	Member Variables			
+	// ABH missing transparency???
+		float m_Transparency; //SetTransparency / GetTransparency; 
+		uint32 m_TransitionInDuration;
+		uint32 m_TransitionOutDuration;
+		uint32 m_TransitionInID;
+		uint32 m_TransitionOutID;
+	// ABH missing rotation???
+		float m_Rotation;
+	// ABH
+		BPoint m_InsertPoint;
+		
 		rgb_color		m_LowColor;				// Low color for content and env
 		rgb_color		m_HighColor;			// High color for content and env
 		drawing_mode	m_DrawingMode;			// Drawing ink effect
@@ -297,3 +331,4 @@ class TCueView : public BView, public BMediaNode
 };
 
 #endif
+

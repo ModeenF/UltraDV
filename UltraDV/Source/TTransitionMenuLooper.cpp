@@ -23,7 +23,7 @@
 #include "ResourceManager.h"
 
 #include "TTransitionMenu.h"
-#include "TTransitionRate.h"
+//#include "TTransitionRate.h"
 #include "TVisualCue.h"
 #include "TCueTransitionButton.h"
 
@@ -381,9 +381,11 @@ void TTransitionMenuLooper::MessageReceived( BMessage *message)
 		//	Don't change transition icon
 		case TRAN_DURATION:
 			{
+				return; // ABH TTransitionRate not implemented
+#ifdef ABH				
 				// Create the transition rate dialog from a resource archive
 				BMessage *theMessage = GetWindowFromResource("TransitionRateWindow");	
-				TTransitionRate *theDialog = new TTransitionRate(theMessage, transitionIn, m_CueView);				
+// ABH				TTransitionRate *theDialog = new TTransitionRate(theMessage, transitionIn, m_CueView);				
 				ASSERT(theDialog);
 				
 				// Center under the mouse
@@ -396,6 +398,7 @@ void TTransitionMenuLooper::MessageReceived( BMessage *message)
 				
 				// Show the dialog
 				theDialog->Show();
+#endif				
 			}
 			return;
 			
@@ -436,12 +439,14 @@ void TTransitionMenuLooper::MessageReceived( BMessage *message)
 			m_CueView->SetTransitionOutDuration( m_CueView->GetDuration() / 2 );
 		}	
 	}
-		
+
+#ifdef ABH		
 	// Post the message
 	if (transitionIn)
 		m_CueView->Window()->PostMessage(buttonMessage, m_CueView->GetCueTransitionInButton());
 	else
 		m_CueView->Window()->PostMessage(buttonMessage, m_CueView->GetCueTransitionOutButton());
+#endif
 	
 	// Clean up
 	delete buttonMessage;

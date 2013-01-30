@@ -29,6 +29,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class TCueData : public BArchivable {
 protected:
 	typedef vector<string> TTypeVector;

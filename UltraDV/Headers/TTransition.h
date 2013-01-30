@@ -30,6 +30,9 @@ class TTransition
 		void 	SetStartTime(uint32 startTime);
 		void 	SetDuration(uint32 duration);
 		void 	SetTransitionID(int32 theID);
+		// ABH missing functions
+//		bool 	HasTransitionIn();
+//		bool 	HasTransitionOut();
 		
 		void	Stop();
 		void	Reset();
@@ -47,6 +50,7 @@ class TTransition
 		// Member Variables
 		bool				m_IsDone;
 		bool				m_IsTransitionIn;
+		bool				m_IsTransitionOut;
 		TStageView			*m_Stage;
 		TVisualCue			*m_SrcView;
 		BView 				*m_MaskView;

@@ -172,6 +172,9 @@ void TVisualCue::Init()
 	m_CanLoop			= false;
 		
 	m_DisplayQuality	= kPreviewQuality;
+	m_Transparency = 0;	// ABH
+// ABH should init	m_Scale 
+	m_Rotation = 0;
 	
 	// Default initialization
 	TCueView::Init();
@@ -218,7 +221,85 @@ void TVisualCue::Init()
 #pragma mark -
 #pragma mark === Archiving Functions ===
 
+// ABH missing functions 
 
+bool TVisualCue::HasTransitionIn(){
+	return m_HasTransitionIn;	// Have to initialize this somewhere!
+}
+
+bool TVisualCue::HasTransitionOut(){
+	return m_HasTransitionOut;	// Have to initialize this somewhere!
+}
+
+// ABH called in TTransitionMenuLooper
+//BHandler TVisualCue::GetCueTransitionOutButton(){
+//	
+//}
+
+//BHandler TVisualCue::GetCueTransitionInButton(){
+//	
+//}
+
+void TVisualCue::SetTransparency(float val)
+{
+	printf("SetTransparency called\n");
+
+	if (val > 0){
+		m_Transparency = val;
+	}
+}
+
+float TVisualCue::GetTransparency(){
+	printf("GetDrawArea called\n");
+	return m_Transparency;
+}
+
+BRect TVisualCue::GetDrawArea(){
+	printf("GetDrawArea called\n");
+}
+
+float TVisualCue::GetRotation(){
+	printf("GetRotation called\n");
+	return m_Rotation;
+}
+
+void TVisualCue::SetRotation(float val){
+	printf("SetRotation called\n");
+	if (val >= 0){
+		m_Rotation = val;
+	}
+}
+
+BRect TVisualCue::GetArea(){
+	printf("GetArea called - fix this!!!\n");
+	return (BRect)(1.0,1.0);	//ABH fix this !!!
+}
+BRect TVisualCue::GetScaledArea(){
+	printf("GetScaledAra called - fix this!!!\n");
+	return (BRect)(1.0,1.0); 	//ABH fix this !!!
+}
+BPoint TVisualCue::GetScale(){
+	printf("GetScale called\n");
+	return m_Scale ;
+}
+
+void TVisualCue::SetScale(BPoint val){
+	printf("SetScale called\n");
+	
+		m_Scale = val;
+
+}
+
+int TVisualCue::GetDuration(){
+	printf("GetDuration called - fix this!!!\n");
+	return 1; 		// ABH fix this!	
+}
+
+BRect TVisualCue::GetCroppedArea(){
+	BRect area = (0,0);
+	printf("GetCroppedArea called - fix this!!!\n");
+	return (BRect)(1.0,1.0); // fix this !!!
+}
 //---------------------------------------------------------------------
 //	Instantiate
 //---------------------------------------------------------------------

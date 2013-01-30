@@ -27,6 +27,7 @@ class MuseumApp : public BApplication
 		void			AboutRequested();
 		bool			QuitRequested();
 		void			RefsReceived(BMessage *a_message);
+		void ShowFileOpenPanel();	// ABH  make it public
 		
 		// Accessor methods		
 		inline TCueSheetWindow		*GetCueSheet(){ return m_CueSheetWindow; }
@@ -120,7 +121,7 @@ class MuseumApp : public BApplication
 		void 	UpdateWindowsMenuDocs();
 		
 		// File IO
-		void 	ShowFileOpenPanel();
+//		void 	ShowFileOpenPanel();
 		void 	ShowFileSavePanel();
 		
 		// Add-ons

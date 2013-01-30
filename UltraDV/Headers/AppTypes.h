@@ -15,6 +15,12 @@
 #ifndef __APPTYPES_H__
 #define __APPTYPES_H__
 
+#if __GNUC__ > 2
+#ifndef dllexport
+#define dllexport
+#endif
+#endif
+
 // Current file version
 #define kCurrentFileVersion 0x0100
 

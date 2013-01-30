@@ -19,6 +19,8 @@
 // Pause messages
 #define PAUSE_DONE_MSG	'pdMG'
 
+#include "TPlaybackList.h"
+
 // Pause Cue Types
 enum pauseCueTypes
 {
@@ -55,6 +57,8 @@ class TPauseCue : public TCueView
 		void 	MessageReceived(BMessage *message);
 		
 		void 	Preroll(double currentTime);
+		// ABH missing routine
+		void	Preroll(TPlaybackEvent *PlaybackEvent, double currentTime);
 		void 	Play();
 		void 	Pause();
 		void 	DoPause(TPlaybackEngine *theEngine);

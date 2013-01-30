@@ -5,7 +5,9 @@
 #define TIMED_BUFFER_QUEUE_H
 
 struct _buffer_queue_imp;
-class BBuffer;
+
+#include <Buffer.h>
+// ABH class BBuffer;
 
 //	operations on this queue are thread safe (but successive operations
 //	are not race condition safe)

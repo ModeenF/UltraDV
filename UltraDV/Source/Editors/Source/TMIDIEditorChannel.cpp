@@ -24,7 +24,7 @@
 
 #include "TMIDIEditor.h"
 #include "TMIDIEditorChannel.h"
-
+#include <interface/View.h>
 
 // Constants
 
@@ -35,7 +35,8 @@
 //
 //
 
-TMIDIEditorChannel::TMIDIEditorChannel(TMIDIEditor *parent, BRect bounds) : BView(bounds, "MIDIEditorView", B_FOLLOW_LEFT | B_FOLLOW_TOP, B_WILL_DRAW | B_FRAME_EVENTS)
+TMIDIEditorChannel::TMIDIEditorChannel(TMIDIEditor *parent, BRect bounds) : 
+	BView(bounds, "MIDIEditorView", B_FOLLOW_LEFT | B_FOLLOW_TOP, B_WILL_DRAW | B_FRAME_EVENTS)
 {
 	m_Parent = parent;		
 }

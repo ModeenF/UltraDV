@@ -22,6 +22,8 @@
 #include "AppUtils.h"
 
 #include "TRefFilter.h"
+//#include <FilePanel.h>
+//#include <sys/stat.h>
 
 //---------------------------------------------------------------------
 //	Constructor
@@ -35,23 +37,31 @@ TRefFilter::TRefFilter(FilterType filterType) : BRefFilter()
 }
 
 
+// destructor
+
+TRefFilter::~TRefFilter(void)
+{
+}
+
 //---------------------------------------------------------------------
 //	Constructor
 //---------------------------------------------------------------------
 //
 //
 
-bool TRefFilter::Filter(const entry_ref *theRef, BNode *theNode, struct stat *theStat, const char *mimetype)
+bool TRefFilter::Filter(const entry_ref *theRef, BNode *theNode, 
+					struct stat_beos *theStat, const char *mimetype)
 {
 	BNodeInfo nodeInfo(theNode);
+	
 
 	switch(m_FilterType)
 	{
 		case kAudioFilter:
 		{
 			// Allow directories
-			if (S_ISDIR(theStat->st_mode)) 
-				return true;
+			//ABH if (S_ISDIR(theStat->st_mode)) 
+			//	return true;
 					
 			// Allow audio
 			if (IsAudio(nodeInfo))
@@ -62,8 +72,8 @@ bool TRefFilter::Filter(const entry_ref *theRef, BNode *theNode, struct stat *th
 		case kImageFilter:
 			{
 				// Allow directories
-				if (S_ISDIR(theStat->st_mode)) 
-					return true;
+			//	if (S_ISDIR(theStat->st_mode)) 
+			//		return true;
 					
 				// Allow images
 				if (IsImage(nodeInfo))
@@ -74,8 +84,8 @@ bool TRefFilter::Filter(const entry_ref *theRef, BNode *theNode, struct stat *th
 		case kTextFilter:
 			{
 				// Allow directories
-				if (S_ISDIR(theStat->st_mode)) 
-					return true;
+			//	if (S_ISDIR(theStat->st_mode)) 
+			//		return true;
 					
 				// Allow text
 				if (IsText(nodeInfo))
@@ -86,8 +96,8 @@ bool TRefFilter::Filter(const entry_ref *theRef, BNode *theNode, struct stat *th
 		case kVideoFilter:
 			{
 				// Allow directories
-				if (S_ISDIR(theStat->st_mode)) 
-					return true;
+			//	if (S_ISDIR(theStat->st_mode)) 
+			//		return true;
 					
 				// Allow video
 				if (IsVideo(nodeInfo))
@@ -98,8 +108,8 @@ bool TRefFilter::Filter(const entry_ref *theRef, BNode *theNode, struct stat *th
 		case kCueSheetFilter:
 			{
 				// Allow directories
-				if (S_ISDIR(theStat->st_mode)) 
-					return true;
+			//	if (S_ISDIR(theStat->st_mode)) 
+			//		return true;
 					
 				// Allow CueSheets
 				if (IsCueSheet(nodeInfo))
@@ -114,4 +124,7 @@ bool TRefFilter::Filter(const entry_ref *theRef, BNode *theNode, struct stat *th
 	// Fail if we get here
 	return false;
 }
+
+
+
 

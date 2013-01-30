@@ -54,8 +54,10 @@ class TCueChannel: public BView
 		BList 		*GetSelectedCues();
 				
 		bool 		CanInsertCue(TCueView *insertCue, uint32 insertTime, bool showAlert);
+		bool		CanInsertCue(TCueView *insertCue, BPoint insertPoint, bool showAlert); // needs to be implemented
 		void 		AddCue(TCueView *cueView);
 		void 		InsertCue(TCueView *cueView, uint32 time);
+		void		InsertCue(TCueView *cueView, BPoint insertPoint, uint32 insertTime);
 		void 		RemoveCue(TCueView *cueView);
 		
 		TCueView 	*GetCueAtTime(uint32 theTime);

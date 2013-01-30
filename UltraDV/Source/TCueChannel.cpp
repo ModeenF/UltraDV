@@ -101,7 +101,7 @@ TCueChannel::TCueChannel(BMessage *data) : BView(data)
 	data->FindInt32("ID", &m_ID);		
 	
 	char *theStr;
-	data->FindString("Name", &theStr);		
+	data->FindString((const char *)"Name",(const char *) &theStr);		
 	strcpy(m_Name, theStr);	
 	
 	data->FindBool("IsMuted", &m_IsMuted);
@@ -1242,6 +1242,21 @@ bool TCueChannel::CanInsertCue(TCueView *insertCue, uint32 insertStartTime, bool
 	return true;
 }
 
+//
+//
+// ABH missing function
+//
+//
+bool TCueChannel::CanInsertCue(TCueView *insertCue, BPoint insertPoint, bool showAlert){
+	// ABH should check insertPoint validity - fix this
+	printf("CanInsertCue: called with insertPoint, fix this\n");
+//	return CanInsertCue(insertCue, insertStartTime, showalert);	
+	return (bool)1;
+}
+
+
+
+
 
 //---------------------------------------------------------------------
 //	AddCue
@@ -1343,6 +1358,72 @@ void TCueChannel::InsertCue(TCueView *cueView, uint32 time)
 	
 	Looper()->Unlock();
 }
+
+// ABH - missing function
+// InsertCue
+//
+void TCueChannel::InsertCue(TCueView *cueView, BPoint insertPoint, uint32 insertTime){
+	
+	Looper()->Lock();
+	
+	const BRect bounds = Bounds();
+	
+	BPoint movePt;
+	movePt.y = bounds.top + kCueInset;
+		
+	//	Get time position in pixels
+	uint32 position = TimeToPixels(time, GetCurrentTimeFormat(), GetCurrentResolution());
+	
+	//	Possible bug: Offset move point to take into account scrolled view
+	movePt.x = position;
+	movePt.x -= bounds.left;		
+
+	//	Update internal start time
+	cueView->SetStartTime(insertTime);
+		
+	//	Set ownership to this channel and add as child of view
+	if ( this != cueView->GetChannel() || cueView->Parent() == NULL)
+	{
+		AddChild(cueView);
+		cueView->SetChannel(this);
+		
+		//	Resize to channel dimensions
+		int32 height = Frame().Height() - kCueInset*2;
+		cueView->ResizeTo( cueView->Bounds().Width(), height);					
+	}
+	
+	//	Move to insert point	
+	cueView->MoveTo(movePt);
+				
+	//	Reorder and add to the channel's cue list
+	AddCueToList(cueView);
+				
+	//	Update the cue
+	cueView->ChannelInsert();
+	
+	//	Make it visible and set focus
+	cueView->Show();
+	cueView->MakeFocus(true);
+	
+	// 	Check for channel expanded or contracted state.  Show or hide cue controls
+	//	depending on state
+	if ( m_IsExpanded )
+		cueView->Expand();
+	else
+		cueView->Contract();	
+		
+	// Update stage appearence
+	BMessage *theMessage = new BMessage(UPDATE_TIMELINE_MSG);
+	theMessage->AddInt32("TheTime", GetCurrentTime());
+	static_cast<MuseumApp *>(be_app)->GetCueSheet()->PostMessage(theMessage, static_cast<MuseumApp *>(be_app)->GetCueSheet()->GetCueSheetView());
+	delete theMessage;		
+					
+	
+	Looper()->Unlock();
+}
+
+
+
 
 
 
@@ -2499,6 +2580,7 @@ void TCueChannel::AttachedToWindow()
 		m_CueSheet 	= (TCueSheetView *)Parent();		
 	
 		//	Add ourselves to cue list
+printf("TCueChannel::AttachedToWindow: GetChannelList\n");
 		BList *channelList = m_CueSheet->GetChannelList();		
 		if ( channelList->HasItem(this) == false)
 			channelList->AddItem(this);			

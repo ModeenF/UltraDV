@@ -671,7 +671,7 @@ void TAudioCaptureWindow::SelectAudioFile(BMessage *theMessage)
 		char fileName[B_FILE_NAME_LENGTH];
 						
 		// Get name of file to be saved as
-		theMessage->FindString("name", &theName);
+		theMessage->FindString((const char *)"name", (const char **)&theName);
 		strcpy(fileName, theName);
 		
 		// Create new file

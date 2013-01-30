@@ -67,6 +67,16 @@
 #include "TRecordPrefsDialog.h"
 #include "TVideoEditor.h"
 
+#include "Watch.h"
+
+// ABH assert.h
+#include <assert.h>
+#ifdef ASSERT
+#undef ASSERT
+#endif
+#define ASSERT(x) assert(x)
+ 
+
 #include "MuseumApp.h"
 
 // Constants
@@ -111,10 +121,12 @@ main()
 MuseumApp::MuseumApp(): BApplication("application/x-mediapede-Museum")
 {	
 	// Leak checking
-	//#ifdef DEBUG
-	//	SetNewLeakChecking(true); 
-	//	SetMallocLeakChecking(true); 
-	//#endif
+// ABH
+//#ifdef DEBUG
+//SetNewLeakChecking(true); 
+//SetMallocLeakChecking(true); 
+//#endif
+WATCH("In constructor\n");
 	
 	// Init palettes to NULL
 	m_CueSheetWindow 	= NULL;
@@ -198,6 +210,8 @@ void MuseumApp::ReadyToRun()
 	m_IsCueDrag 	= false;
 	m_FileOpenPanel = NULL;
 	m_FileSavePanel = NULL;
+
+WATCH("In ReadyToRun\n");
 	
 	// Display the About box
 	TAboutBox *aboutWindow = new TAboutBox();
@@ -210,7 +224,7 @@ void MuseumApp::ReadyToRun()
 	if (!m_MediaRoster) 
 	{ 
 		//	The Media Server appears to be dead -- handle that here
-		ErrorAlert("Unable to connect to media_server.");
+		ErrorAlert((char *)"Unable to connect to media_server.");
 		be_app->PostMessage(B_QUIT_REQUESTED);
 		return;
 	}
@@ -247,6 +261,7 @@ void MuseumApp::ReadyToRun()
 
 	// Show the dialog
 	theDialog->Show();		
+WATCH("End of ReadyToRun\n");
 }	
 
 
@@ -270,7 +285,7 @@ void MuseumApp::Init()
 	
 	// Lazlo does not have a control palette
 	m_MediaCuePalette = new TMediaCuePalette();
-		
+WATCH("In MuseumApp::Init\n");		
 	
 	// Create transport
 	BRect tranRect = theScreen.Frame(); 
@@ -326,6 +341,8 @@ void MuseumApp::Init()
 	m_StageTools->Show();
 	m_CueSheetWindow->GetStage()->Show();
 	m_CueSheetWindow->Show();
+
+WATCH("MuseumApp::Init 7 windows should display\n");
 	
 	BMessage *message = new BMessage(ALL_FRONT_MSG);
 	PostMessage(message, be_app);
@@ -492,40 +509,48 @@ bool MuseumApp::QuitRequested()
 //
 
 void MuseumApp::MessageReceived(BMessage* message)
-{		
+{	
+WATCH("In MuseumApp::MessageReceived\n");
+	
 	switch(message->what)
 	{											
 		// Dialogs
-		case NEW_PROJECT_MSG:
-			{
+		case NEW_PROJECT_MSG: {
+WATCH("NEW_PROJECT_MSG\n");
 				// Retrieve setting from message
 				BMessage archiveMessage;
-				if ( !message->FindMessage("Preset", &archiveMessage))
-				{
+				if ( !message->FindMessage("Preset", &archiveMessage)){
+				
 					BArchivable *unarchived = instantiate_object(&archiveMessage); 
-			 		if ( unarchived ) 
-			 		{	 						
+			 		if ( unarchived ){	 						
 						;//TPreset *preset = cast_as(unarchived, TPreset); 
+					} else {
+						printf("MA:: instantiate_object failed!\n");
+						ASSERT(unarchived);
 					}
 										
-					// Complete initilaization
+					// Complete initialization
 					Init();				
-				}
-				else
-					TRESPASS();								
+				} else {
+					WATCH("MuseumApp::MessageReceived: NEW_PROJECT_MSG - could not unarchive!\n");
+					TRESPASS();	
+				}							
 			}		
 			break;
 			
 		//	Handle 
 		case ACTION_PALETTE_CLOSE_MSG:
+WATCH("ACTION_PALETTE_CLOSE_MSG\n");
 			m_ActionCuePalette = NULL;
 			break;
 			
 		case MEDIA_PALETTE_CLOSE_MSG:
+WATCH("MEDIA_PALETTE_CLOSE_MSG\n");
 			m_MediaCuePalette = NULL;
 			break;
 
 		case TIME_PALETTE_CLOSE_MSG:
+WATCH("TIME_PALETTE_CLOSE_MSG\n");
 			m_TimePalette = NULL;
 			break;
 
@@ -535,6 +560,7 @@ void MuseumApp::MessageReceived(BMessage* message)
 		
 		// Bring all windows to the front
 		case ALL_FRONT_MSG:
+WATCH("ALL_FRONT_MSG\n");
 			m_CueSheetWindow->Activate(true);
 			//m_ActionCuePalette->Activate(true);		
 			m_MediaCuePalette->Activate(true);		
@@ -562,6 +588,7 @@ void MuseumApp::MessageReceived(BMessage* message)
 		case FILE_PAGESETUP_MSG	:
 		case FILE_PRINT_MSG	:						
 		case FILE_QUIT_MSG:
+WATCH("Some FILE MSG\n");
 			HandleFileMenu(message);
 			break;
 			
@@ -575,6 +602,7 @@ void MuseumApp::MessageReceived(BMessage* message)
 		case EDIT_INSERTTIME_MSG:
 		case EDIT_ALIGNSTART_MSG:
 		case EDIT_ALIGNEND_MSG:
+WATCH("Some EDIT MSG\n");
 			HandleEditMenu(message);
 			break;					
 																		
@@ -592,6 +620,7 @@ void MuseumApp::MessageReceived(BMessage* message)
 		case CUE_ALIGNEND_MSG:
 		case CUE_COLLAPSEALL_MSG:
 		case CUE_JUMPTO_MSG:
+WATCH("Some CUE MSG\n");
 			HandleCueSheetMenu(message);
 			break;
 			
@@ -604,6 +633,7 @@ void MuseumApp::MessageReceived(BMessage* message)
 		case CUESHEET_SETUP_MSG:
 		case CUESHEET_EDIT_MSG:
 		case CUESHEET_KEYFRAME_MSG:
+WATCH("Some CUESHEET MSG\n");
 			HandleCueMenu(message);
 			break;
 
@@ -614,6 +644,7 @@ void MuseumApp::MessageReceived(BMessage* message)
 		case CAPTURE_AUDSETTNGS_MSG:
 		case CAPTURE_PREFS_MSG:
 		case CAPTURE_LEVELS_MSG:
+WATCH("Some CAPTURE MSG\n");
 			HandleCaptureMenu(message);
 			break;
 			
@@ -625,6 +656,7 @@ void MuseumApp::MessageReceived(BMessage* message)
 		case STAGE_GRID_MSG:
 		case STAGE_GRIDSETUP_MSG:
 		case STAGE_PICTURE_MSG:
+WATCH("Some STAGE MSG\n");
 			HandleStageMenu(message);
 			break;
 			
@@ -638,6 +670,7 @@ void MuseumApp::MessageReceived(BMessage* message)
 		case WINDOWS_MEMORY_MSG	:
 		case WINDOWS_STAGE_TOOLS_MSG:
 		case WINDOWS_DOCUMENT_MSG:
+WATCH("Some WINDOWS control MSG\n");
 			HandleWindowsMenu(message);
 			break;
 		
@@ -666,12 +699,20 @@ void MuseumApp::RefsReceived(BMessage *message)
 	//  All of this below is for opening cue sheets...
 	
 	// Extract file ref from message
+	
+	// ABH
+	printf("MA:RR\n");
+	status_t val;
 	entry_ref fileRef;
 	message->FindRef("refs", 0, &fileRef);
 
 	// Resolve possible symlink...
 	BEntry entry(&fileRef, true);
-	entry.GetRef(&fileRef);
+	val = entry.GetRef(&fileRef);
+	if (val != B_OK){
+		printf("MuseumApp::RefsReceived GetRef failed!\n");
+	}
+	
 
 	// 	Check and see if file is already open.  If so, bring it to the front and exit
 	//	without loading the file
@@ -679,8 +720,7 @@ void MuseumApp::RefsReceived(BMessage *message)
 	{	
 		TCueSheetWindow *theWindow = (TCueSheetWindow *)m_CueSheetList->ItemAt(index);
 		
-		if (theWindow)
-		{
+		if (theWindow){
 			if ( strcmp( theWindow->Title(), fileRef.name) == 0 )
 			{
 				theWindow->Show();
@@ -692,9 +732,8 @@ void MuseumApp::RefsReceived(BMessage *message)
 	// Create file from ref
 	BFile *openFile = new BFile(&fileRef, B_READ_ONLY);
 	
-	if (!openFile)
-	{
-		ErrorAlert("Error Opening File.");
+	if (!openFile){
+		ErrorAlert((char *)"Error Opening File.");
 		return;
 	}
 	
@@ -705,18 +744,15 @@ void MuseumApp::RefsReceived(BMessage *message)
 	openFile->Read(&fileHeader, sizeof(CueSheetHeaderChunk));
 	
 	// Determine file type byte order
-	if ( fileHeader.header.chunkID == kCueSheetDocChunkMotorolaID )
-	{
+	if ( fileHeader.header.chunkID == kCueSheetDocChunkMotorolaID ){
 		if (B_HOST_IS_LENDIAN)
 			swapBytes = true;
 	}
-	else if ( fileHeader.header.chunkID == kCueSheetDocChunkIntelID)
-	{
+	else if ( fileHeader.header.chunkID == kCueSheetDocChunkIntelID){
 		if (B_HOST_IS_BENDIAN)
 			swapBytes = true;
 	}
-	else
-	{
+	else {
 		//ErrorAlert(kFILE_ERROR, kBAD_FILE_FORMAT);
 		ErrorAlert("Bogus File");
 		delete openFile;
@@ -728,8 +764,7 @@ void MuseumApp::RefsReceived(BMessage *message)
 		SwapCueSheetHeaderChunk(&fileHeader);
 		
 	// Check for valid version
-	if (fileHeader.version > kCurrentFileVersion)
-	{
+	if (fileHeader.version > kCurrentFileVersion) {
 		//Failure(kFILE_ERROR, kCANT_OPEN_FILE);
 		ErrorAlert("Bogus File");
 		delete openFile;
@@ -740,6 +775,7 @@ void MuseumApp::RefsReceived(BMessage *message)
 	
 	TCueSheetWindow *cueSheet = NULL;
 	
+	printf("MA:RR GetSize\n");
 	// Load in archived BMessage
 	off_t fileSize;
 	openFile->GetSize(&fileSize);
@@ -750,33 +786,42 @@ void MuseumApp::RefsReceived(BMessage *message)
 	BMessage *presetMessage = new BMessage();
 	presetMessage->Unflatten((const char *)data);
 	
-	if (presetMessage)
-	{
+	if (presetMessage) {
 	 	BArchivable *unarchived = instantiate_object(presetMessage);
-	 	if ( unarchived ) 
-	 	{
+	 	if ( unarchived ) {
 			// Add cue to our list of unarchived cues
 			cueSheet = cast_as(unarchived, TCueSheetWindow); 
+			if (!cueSheet){
+				printf("MA::RR cast_as failed!\n");
+				ASSERT(cueSheet);
+
+			}
+		} else {
+			printf("MS::RR !unarchived\n");
 		}				
+	} else {
+		printf("MA::RR presetMessage == null\n");
 	}
+	ASSERT(cueSheet);
 	
 	//	Clean up
 	free(data);	
 	delete presetMessage;
-	
-	ASSERT(cueSheet);
+
+// ABH debug
+	printf("MA:RR add to all doc window\n");
 	
 	// Add it to all documents Windows menu
-	for (int32 index = 0; index < m_CueSheetList->CountItems(); index++)
-	{	
+	for (int32 index = 0; index < m_CueSheetList->CountItems(); index++) {	
 		TCueSheetWindow *theWindow = (TCueSheetWindow *)m_CueSheetList->ItemAt(index);
 		
-		if (theWindow)
-		{
+		if (theWindow) {
 			TMuseumMenus *theMenu = theWindow->GetMenu();
 			
 			if (theMenu)
 				theMenu->AddToWindowsMenu( cueSheet->Title(), cueSheet->GetID());
+		} else {
+			printf("MuseumApp:RefsReceived bad window!\n");
 		}
 		
 	}
@@ -807,16 +852,14 @@ void MuseumApp::AddChannelDialog()
 	// See if the dialog is already open.  If so, bring it to front
 	BWindow *theWindow = FindWindow("Insert Channel");
 	
-	if (theWindow)
-	{
+	if (theWindow) {
 		// 	Double check and find it's main view. We do this to avoid conflicts
 		// 	with a user window of the same name
 		if ( theWindow->FindView("InsertChannelView") != NULL)
 			theWindow->Activate(true);	
 
 	}
-	else
-	{
+	else {
 		// Create the channel name dialog
 		BRect bounds( 200, 100, 450, 185);
 		TAddChannel *theDialog = new TAddChannel(bounds, GetCueSheet()->GetCueSheetView());
@@ -843,15 +886,13 @@ void MuseumApp::DeleteChannelDialog()
 	// See if the dialog is already open.  If so, bring it to front
 	BWindow *theWindow = FindWindow("Delete Channel");
 	
-	if (theWindow)
-	{
+	if (theWindow) {
 		// 	Double check and find it's main view. We do this to avoid conflicts
 		// 	with a user window of the same name
 		if ( theWindow->FindView("DeleteChannelView") != NULL)
 			theWindow->Activate(true);	
 	}
-	else
-	{
+	else {
 		// Create the channel name dialog
 		BRect bounds( 200, 100, 450, 185);
 		TDeleteChannel *theDialog = new TDeleteChannel(bounds, GetCueSheet()->GetCueSheetView());
@@ -878,15 +919,13 @@ void MuseumApp::StageSetupDialog()
 	// See if the dialog is already open.  If so, bring it to front
 	BWindow *theWindow = FindWindow("Stage Setup");
 	
-	if (theWindow)
-	{
+	if (theWindow) {
 		// 	Double check and find it's main view. We do this to avoid conflicts
 		// 	with a user window of the same name
 		if ( theWindow->FindView("StageSetupView") != NULL)
 			theWindow->Activate(true);	
 	}
-	else
-	{
+	else {
 		// Create the channel name dialog from a resource archive
 		BMessage *theMessage = GetWindowFromResource("StageSetupWindow");
 		TStageSetup *theDialog = new TStageSetup( m_CueSheetWindow->GetStage(), theMessage);
@@ -912,15 +951,13 @@ void MuseumApp::VideoCaptureDialog()
 	// See if the dialog is already open.  If so, bring it to front
 	BWindow *theWindow = FindWindow("Capture Video");
 	
-	if (theWindow)
-	{
+	if (theWindow) {
 		// 	Double check and find it's main view. We do this to avoid conflicts
 		// 	with a user window of the same name
 		if ( theWindow->FindView("VidCapView") != NULL)
 			theWindow->Activate(true);	
 	}
-	else
-	{
+	else {
 		// Create the window
 		TVideoCaptureWindow *theWindow = new TVideoCaptureWindow();
 		ASSERT(theWindow);
@@ -946,15 +983,13 @@ void MuseumApp::AudioCaptureDialog()
 	// See if the dialog is already open.  If so, bring it to front
 	BWindow *theWindow = FindWindow("Capture Audio");
 	
-	if (theWindow)
-	{
+	if (theWindow) {
 		// 	Double check and find it's main view. We do this to avoid conflicts
 		// 	with a user window of the same name
 		if ( theWindow->FindView("AudioCaptureView") != NULL)
 			theWindow->Activate(true);
 	}
-	else
-	{
+	else {
 		// Create the channel name dialog from a resource archive
 		BMessage *theMessage = GetWindowFromResource("AudioCaptureWindow");
 		TAudioCaptureWindow *theWindow = new TAudioCaptureWindow(theMessage);
@@ -981,15 +1016,13 @@ void MuseumApp::VideoSettingsDialog()
 	// See if the dialog is already open.  If so, bring it to front
 	BWindow *theWindow = FindWindow("Video Settings");
 	
-	if (theWindow)
-	{
+	if (theWindow) {
 		// 	Double check and find it's main view. We do this to avoid conflicts
 		// 	with a user window of the same name
 		if ( theWindow->FindView("VideoSettingsTabView") != NULL)
 			theWindow->Activate(true);	
 	}
-	else
-	{		
+	else {		
 		// Create the dialog
 		BRect dialogRect(0, 0, 385, 250);		 
 		TVideoSettingsDialog *theDialog = new TVideoSettingsDialog(dialogRect);
@@ -1016,15 +1049,13 @@ void MuseumApp::AudioSettingsDialog()
 	// See if the dialog is already open.  If so, bring it to front
 	BWindow *theWindow = FindWindow("Audio Settings");
 	
-	if (theWindow)
-	{
+	if (theWindow) {
 		// 	Double check and find it's main view. We do this to avoid conflicts
 		// 	with a user window of the same name
 		if ( theWindow->FindView("AudioSettingsTabView") != NULL)
 			theWindow->Activate(true);	
 	}
-	else
-	{		
+	else {		
 		// Create the dialog
 		BRect dialogRect(0, 0, 320, 250);		 
 		TAudioSettingsDialog *theDialog = new TAudioSettingsDialog(dialogRect);
@@ -1051,15 +1082,13 @@ void MuseumApp::RecordPrefsDialog()
 	// See if the dialog is already open.  If so, bring it to front
 	BWindow *theWindow = FindWindow("Record Preferences");
 	
-	if (theWindow)
-	{
+	if (theWindow) {
 		// 	Double check and find it's main view. We do this to avoid conflicts
 		// 	with a user window of the same name
 		if ( theWindow->FindView("RecordPrefsView") != NULL)
 			theWindow->Activate(true);
 	}
-	else
-	{
+	else {
 		// Create the channel name dialog from a resource archive
 		BMessage *theMessage = GetWindowFromResource("RecordPrefsWindow");
 		TRecordPrefsDialog *theWindow = new TRecordPrefsDialog(theMessage);
@@ -1089,8 +1118,7 @@ void MuseumApp::HandleFileMenu(BMessage *message)
 	switch(message->what)
 	{	
 		// Create new CueSheet
-		case FILE_NEW_MSG:	
-			{
+		case FILE_NEW_MSG:{
 				// Display New File Progress Bar
 				
 				// Get screen dimensions
@@ -1102,12 +1130,10 @@ void MuseumApp::HandleFileMenu(BMessage *message)
 				TCueSheetWindow *cueSheet = new TCueSheetWindow( bounds, m_CueSheetList->CountItems()+1 );
 				
 				// Add it to all documents Windows menu
-				for (int32 index = 0; index < m_CueSheetList->CountItems(); index++)
-				{	
+				for (int32 index = 0; index < m_CueSheetList->CountItems(); index++) {	
 					TCueSheetWindow *theWindow = (TCueSheetWindow *)m_CueSheetList->ItemAt(index);
 					
-					if (theWindow)
-					{
+					if (theWindow) {
 						TMuseumMenus *theMenu = theWindow->GetMenu();
 						
 						if (theMenu)
@@ -1597,6 +1623,7 @@ void MuseumApp::UpdateWindowsMenuDocs()
 
 void MuseumApp::ShowFileOpenPanel()
 { 		
+	TRefFilter *refFilter;
 	
 	// If the panel has already been constructed, show the panel
 	// Otherwise, create the panel	
@@ -1605,7 +1632,7 @@ void MuseumApp::ShowFileOpenPanel()
 	else
 	{
 		// Create a RefFilter for a "video" type
-		TRefFilter *refFilter = new TRefFilter(kCueSheetFilter);
+		refFilter = new TRefFilter(kCueSheetFilter);
 
 		// Construct a file panel and set it to modal
 	 	m_FileOpenPanel = new BFilePanel( B_OPEN_PANEL, NULL, NULL, B_FILE_NODE, false, NULL, refFilter, true, true );

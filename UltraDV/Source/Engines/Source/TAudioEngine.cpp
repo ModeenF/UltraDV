@@ -17,7 +17,7 @@
 
 #include <Application.h>
 #include <Debug.h>
-#include <byteorder.h>
+#include <ByteOrder.h>
 
 #include "TAudioEngine.h"
 

@@ -66,7 +66,8 @@ class TTransitionMenu : public BPopUpMenu
 
 
 // Menu Item Enumeration
-const enum transitionIDs
+// const 
+enum transitionIDs
 {
 	kTransitionNone,
 	kWipeRight,

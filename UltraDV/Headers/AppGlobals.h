@@ -18,6 +18,6 @@
 #include "MuseumApp.h"
 
 // Globals
-MuseumApp *gMuseumApp;
+// ABH MuseumApp *gMuseumApp;
 
 #endif

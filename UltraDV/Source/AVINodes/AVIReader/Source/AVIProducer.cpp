@@ -564,8 +564,13 @@ status_t AVIProducer::GetNextFileFormat( int32 *cookie, media_file_format *outFo
 	*cookie++;
 	
 	//	File format structue
-	outFormat->flags = outFormat->B_READABLE|outFormat->B_WRITABLE|outFormat->B_KNOWS_VIDEO|
-					   outFormat->B_KNOWS_AUDIO|outFormat->B_PERFECTLY_SEEKABLE;	
+	
+	// ABH was B_KNOWS_VIDEO, B_KNOWS_AUDIO
+//	outFormat->flags = outFormat->B_READABLE|outFormat->B_WRITABLE|outFormat->B_KNOWS_ENCODED_VIDEO|
+//					   outFormat->B_KNOWS_ENCODED_AUDIO|outFormat->B_PERFECTLY_SEEKABLE;	
+	
+	outFormat->capabilities = outFormat->B_READABLE|outFormat->B_WRITABLE|outFormat->B_KNOWS_ENCODED_VIDEO|
+					   outFormat->B_KNOWS_ENCODED_AUDIO|outFormat->B_PERFECTLY_SEEKABLE;	
 	strcpy( outFormat->mime_type, "video/avi");
 
 	return B_OK;
@@ -931,7 +936,9 @@ status_t AVIProducer::PrepareToConnect( const media_source &what, const media_de
 	if (what.port != m_Port || what.id != 0)
 		return B_MEDIA_BAD_SOURCE;
 		
-	ASSERT(mConnection == media_destination::null);
+// ABH	ASSERT(mConnection == media_destination::null);
+	
+	
 	if (where == media_destination::null)
 		return B_MEDIA_BAD_DESTINATION;
 		

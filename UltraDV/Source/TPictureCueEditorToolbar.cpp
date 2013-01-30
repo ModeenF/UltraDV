@@ -209,3 +209,4 @@ void TPictureCueEditorToolbar::MessageReceived(BMessage* message)
 			break;	
 	}		
 }
+

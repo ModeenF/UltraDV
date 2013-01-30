@@ -344,7 +344,7 @@ void TMarkerCue::LoadCueIcon()
 	{
 		BRect area(0, 0+(kTimeTextHeight+kTimeTextOffset+3), kCueIconWidth-1, (kCueIconWidth-1)+(kTimeTextHeight+kTimeTextOffset+3));
 		area.OffsetBy(kResizeZoneWidth+5, 0);		
-		m_CueIcon = new TBitmapView(area, cueIcon, false);
+		m_CueIcon = new TBitmapView(area, "MarkerCue",cueIcon, false);
 		AddChild(m_CueIcon);		
 	}	
 }

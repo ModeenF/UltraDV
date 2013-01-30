@@ -14,6 +14,8 @@
 #ifndef __TREFFILTER_H__
 #define __TREFFILTER_H__
 
+#include <FilePanel.h>
+
 typedef enum 
 {
 	kAudioFilter,
@@ -24,12 +26,19 @@ typedef enum
 } FilterType;
 
 // Class Definition
+
+
+
 class TRefFilter : public BRefFilter 
 {
 	public:
 		TRefFilter(FilterType filterType);
+		~TRefFilter(void);
 		
-		bool	Filter(const entry_ref *, BNode *, struct stat *, const char *mimetype);
+//	bool Filter(const entry_ref *, BNode *, struct stat_beos *, const char *);
+//	bool Filter(const entry_ref *, BNode *, struct stat_beos *, const char *mimetype);
+	bool Filter(const entry_ref* ref, BNode* node, struct stat_beos* stat, const char* mimeType);
+
 		
 	private:
 		FilterType m_FilterType;

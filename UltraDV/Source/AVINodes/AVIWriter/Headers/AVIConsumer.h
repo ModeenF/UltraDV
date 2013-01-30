@@ -4,11 +4,14 @@
 #define VID_CONSUMER_H
 
 #include <BufferConsumer.h>
-#include <TimedBufferQueue.h>
+// ABH #include <TimedBufferQueue.h>
+
 #include <Window.h>
 #include <View.h>
 #include <Bitmap.h>
 #include <MediaNode.h>
+
+#include "TimedBufferQueue.h"
 
 #define MAX_CONNECTIONS 16
 
@@ -32,6 +35,8 @@ class AVIConsumer : public BBufferConsumer
 		BMediaNode::run_mode RunMode();						
 		void	SetRunMode( run_mode mode);						
 		void	TimeWarp( bigtime_t at_real_time, bigtime_t to_performance_time);
+		// ABH added this
+		int32	GetBitmapPixelSize(color_space);
 	
 /*	BBufferConsumer */
 public:

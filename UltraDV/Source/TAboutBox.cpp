@@ -26,7 +26,7 @@
 
 const BRect aboutFrame(200, 100, 703, 409); // 504 310
 
-TAboutBox::TAboutBox() : BWindow(aboutFrame, "About Museum", B_MODAL_WINDOW, B_NOT_RESIZABLE | B_NOT_ZOOMABLE)
+TAboutBox::TAboutBox() : BWindow(aboutFrame, "About BeDV", B_MODAL_WINDOW, B_NOT_RESIZABLE | B_NOT_ZOOMABLE)
 {
 	Init();
 }

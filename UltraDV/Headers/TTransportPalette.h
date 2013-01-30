@@ -68,7 +68,8 @@ const int16 kTransportButtonWidth 	= 36;
 const int16 kTransportButtonHeight 	= 29;
 const int16 kTransportButtonOffset 	= 5;
 
-const enum transportButton
+//const 
+enum transportButton
 {
 	kStartButton,
 	kRewindButton,

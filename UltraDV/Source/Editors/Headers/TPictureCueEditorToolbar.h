@@ -25,6 +25,10 @@ class TPictureCueEditorToolbar: public BView
 		~TPictureCueEditorToolbar();
 		
 		void 	Draw(BRect updateRect);
+		// ABH missing declaration ???
+		void MessageReceived(BMessage *);
+		void KeyDown(const char *, long int);
+
 		
 	private:
 		// Member Functions

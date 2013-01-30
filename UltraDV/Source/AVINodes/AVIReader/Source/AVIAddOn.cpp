@@ -93,7 +93,7 @@ int32 AVIAddOn::CountFlavors()
 //	Return info about requested flavor
 //
 
-status_t AVIAddOn::GetFlavorAt( int32 flavorNum, const flavor_info **outInfo)
+status_t AVIAddOn::GetFlavorAt( int32 flavorNum, flavor_info **outInfo)
 {
 	//	Check for flavor violation
 	if ( flavorNum > kNumFlavors)

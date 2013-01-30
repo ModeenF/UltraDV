@@ -19,6 +19,12 @@
 #include <app/Application.h>
 #include <interface/StringView.h>
 #include <support/Debug.h>
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <assert.h>
+
+using namespace std;
 
 #include "AppAlerts.h"
 #include "AppConstants.h"
@@ -30,6 +36,13 @@
 #include "TPreset.h"
 
 #include "TNewProject.h"
+
+#ifdef WATCH
+#undef WATCH
+#endif
+#define WATCH(x) printf(x);
+
+#define ASSERT(x) assert(x)
 
 //-------------------------------------------------------------------
 //	Constructor
@@ -72,6 +85,7 @@ TNewProject::~TNewProject()
 
 void TNewProject::Init()
 {			
+WATCH("In TNewProject::Init\n");
 	// Get dialog items	
 	m_Background = (BView *)FindView("NewProjectView");
 	ASSERT(m_Background);
@@ -109,13 +123,12 @@ void TNewProject::Init()
 	m_PresetList = LoadPresets();
 		
 	// Load presets into dialog
-	if (m_PresetList->CountItems() > 0 )
-	{
+	if (m_PresetList->CountItems() > 0 ) {
 		SetupPresetList(m_PresetList, m_PresetsListView);
 	}
 	// No presets!
-	else
-	{
+	else {
+		WATCH("No presets found, create default presets\n");
 		// Create a set of default presets for user
 		CreateDefaultPresets();
 		
@@ -124,18 +137,21 @@ void TNewProject::Init()
 			delete m_PresetList;
 		
 		m_PresetList = LoadPresets();
-		if (m_PresetList)
-		{
+		if (m_PresetList) {
+printf("LoadPresets returned count of %d\n",m_PresetList->CountItems());
 			SetupPresetList(m_PresetList, m_PresetsListView);			
 		}
 		// We have a big problem if we can't create a new set...
-		else
+		else {
+			WATCH("Cannot create default presets!\n");
 			TRESPASS();
+		}
 	}
 			
 	// Set focus to first item in list
 	m_PresetsListView->Select(0);
 	m_PresetsListView->MakeFocus(true);	
+WATCH("Leaving TNewProject::Init\n");
 }
 
 
@@ -150,12 +166,21 @@ void TNewProject::Init()
 
 void TNewProject::MessageReceived(BMessage* message)
 {
+WATCH("In TNewProject::MessageReceived\n");
+
+
+			char msg1[10];
+			memset(msg1, '\0', 9);
+			memcpy(msg1,&(message->what),4);
+			printf("TNP::MR before switch: ");
+			printf(" %s\n",msg1);
+		
 
 	switch(message->what)
-	{
-		// User pressed OK button.  Inform app about project settings
+	{	// User pressed OK button.  Inform app about project settings
 		case OK_MSG:
 			{					
+WATCH("TWP::MR: OK button\n");
 				// Retrive preset from list
 				TPreset *thePreset = static_cast<TPreset *>(m_PresetList->ItemAt(GetSelectedItem()));
 					
@@ -174,6 +199,7 @@ void TNewProject::MessageReceived(BMessage* message)
 			
 		case CANCEL_MSG:
 			{
+WATCH("TWP:MR: CANCEL\n");
 				// 	Quit application if there are no cue sheets open, otherwise
 				//	just quit
 				BList *theList = m_Parent->GetCueSheetList();
@@ -196,6 +222,7 @@ void TNewProject::MessageReceived(BMessage* message)
 		// List item was selected
 		case LIST_SELECT_MSG:
 			{
+WATCH("TNP::MessageReceived: LIST_SELECT_MSG\n");
 				// 	Make sure that we have an item selected.  If not,
 				//	select first item
 				if ( m_PresetsListView->CurrentSelection() < 0)
@@ -213,14 +240,15 @@ void TNewProject::MessageReceived(BMessage* message)
 		//  User double clicked item.  Load preset and notify app
 		case LIST_INVOKE_MSG:			
 			{	
+			
+WATCH("TNP::MessageReceived: LIST_INVOKE_MSG\n")
 				// Make sure an item is selected
-				if ( m_PresetsListView->CurrentSelection() > 0)
-				{
+				if ( m_PresetsListView->CurrentSelection() > 0){
 					// Get item selected from message
 					int32 theItem;
 					message->FindInt32("index", &theItem);
 					
-					// Retrive preset from list
+					// Retreive preset from list
 					TPreset *thePreset = static_cast<TPreset *>(m_PresetList->ItemAt(theItem));
 					
 					// Archive it and add it to the message
@@ -233,6 +261,8 @@ void TNewProject::MessageReceived(BMessage* message)
 					m_Parent->PostMessage(&invokeMessage);				
 					Lock();
 					Quit();				
+				} else {
+					WATCH("PresetListView: no current selection!\n");
 				}
 			}
 			break;
@@ -258,6 +288,7 @@ void TNewProject::MessageReceived(BMessage* message)
 
 void TNewProject::GetDialogSettings()
 {
+printf("TNP:GDS not implemented!\n");
 	/*
 	// Set cue sheet's TimeFormat based on user changes
 	BMessage *message = new BMessage(TIMEFORMAT_CHANGED_MSG);
@@ -286,7 +317,7 @@ void TNewProject::GetDialogSettings()
 
 BList  *TNewProject::LoadPresets()
 {
-	// Crete list to hold presets to be returned
+	// Create list to hold presets to be returned
 	BList *presetList = new BList();
 	
 	// Get listing of add-ons in directory
@@ -295,29 +326,59 @@ BList  *TNewProject::LoadPresets()
 	BEntry entry(&appInfo.ref);
 	BDirectory settingsDir;
 	entry.GetParent(&settingsDir);
-	settingsDir.SetTo(&settingsDir, kPresetsPathString); 	
+// ABH 	if (settingsDir.SetTo(&settingsDir, kPresetsPathString) != B_OK){
+	if (settingsDir.SetTo(kPresetsPathString) != B_OK){
+		printf("LoadPresets: SetTo failed\n");
+	} else {
+		printf("LoadPresets: SetTo succeeded\n");
+	}
 		
 	status_t 	myErr;
 	BList		*refList = new BList();
    
-	if (settingsDir.InitCheck() == B_OK) 
-	{ 
+	if (settingsDir.InitCheck() == B_OK) { // ABH this fails
 		int32 entries = settingsDir.CountEntries();
 		
-		for( int32 index = 0; index < entries; index++)
-		{
+		for( int32 index = 0; index < entries; index++)	{
 			BEntry *theEntry = new BEntry();
 			myErr = settingsDir.GetNextEntry(theEntry, true);
 			
 			// Add it to our list if we are successful
-			if (myErr != B_ENTRY_NOT_FOUND)
-			{
+			if (myErr != B_ENTRY_NOT_FOUND)	{
 				refList->AddItem(theEntry);
-			}
-			else
+			}else 
 				delete theEntry;
 		}
-	}	
+	} else { //ABH
+		printf("settingsDir failed in TNP::LoadPresets\n");
+		int r_val = settingsDir.InitCheck();
+		switch (r_val){
+			case B_OK:
+				printf("B_OK\n");
+				break;
+			case B_BAD_VALUE:
+				printf("bad value\n");
+				break;
+			case B_ENTRY_NOT_FOUND:
+				printf("entry not found\n");
+				break;
+			case B_NAME_TOO_LONG:
+				printf("name too long\n");
+				break;
+			case B_LINK_LIMIT:
+				printf("link limit\n");
+				break;
+			case B_NO_MEMORY:
+				printf("no memory\n");
+				break;
+			case B_FILE_ERROR:
+				printf("file error\n");
+				break;
+			default:
+				printf("default\n");
+				break;
+		}
+	}
 	
 	// March through list and load presets in the refList
 	for (int32 index = 0; index < refList->CountItems(); index++)
@@ -326,20 +387,20 @@ BList  *TNewProject::LoadPresets()
 		//BEntry *presetEntry = (BEntry *)refList->ItemAt(index);
 		BEntry *presetEntry = static_cast<BEntry *>(refList->ItemAt(index));
 		
-		if (presetEntry)
-		{
+		if (presetEntry){
+		
 			// Create file from ref
 			BFile *openFile = new BFile(presetEntry, B_READ_ONLY);
 			
-			if (openFile->InitCheck() == B_OK)
-			{
+			if (openFile->InitCheck() == B_OK){
+			
 				// Is this a valid file?  Read in the header and check...
 				openFile->Seek(0, SEEK_SET);
 				ChunkHeader	fileHeader;
 				openFile->Read(&fileHeader, sizeof(ChunkHeader));
 				
-				if (fileHeader.chunkID == kPresetChunkID)
-				{
+				if (fileHeader.chunkID == kPresetChunkID){
+				
 					// Load in archived BMessage
 					void *data = malloc( fileHeader.chunkSize);				
 					openFile->Read(data, fileHeader.chunkSize);
@@ -348,11 +409,11 @@ BList  *TNewProject::LoadPresets()
 					BMessage *presetMessage = new BMessage();
 					presetMessage->Unflatten((const char *)data);
 					
-					if (presetMessage)
-					{
+					if (presetMessage){
+					
 					 	BArchivable *unarchived = instantiate_object(presetMessage);
-					 	if ( unarchived ) 
-				 		{ 
+					 	if ( unarchived ){
+				 		
 							// Add cue to our list of unarchived cues
 							TPreset *thePreset = cast_as(unarchived, TPreset); 
 		  					if (thePreset) 
@@ -364,14 +425,18 @@ BList  *TNewProject::LoadPresets()
 					free(data);
 					delete presetMessage;
 				}
+			} else {
+				WATCH("new BFile presetEntry failed\n")
 			}
+		} else {
+			WATCH("BEntry presetEntry == NULL\n")
 		}
 	}
 		
 	// Clean up
 	delete refList;
 
-	// Retrun our list of loaded presets	
+	// Return our list of loaded presets	
 	return presetList;
 }
 
@@ -390,6 +455,13 @@ void TNewProject::SetupPresetList(BList *presetList, BListView *presetListView )
 {
 	ASSERT(presetList);
 	ASSERT(presetListView);
+	// ABH
+	if (!presetList){
+		printf("TNP::SetupPresetList: presetList == NULL!\n");
+	}
+	if (!presetListView){
+		printf("TNP::SetupPresetList: presetListView == NULL!\n");
+	}
 	
 	for( int32 index = 0; index < presetList->CountItems(); index++ )
 	{
@@ -432,7 +504,7 @@ void TNewProject::FreePresetList(BList *presetList)
 //	CreateDefaultPresets
 //---------------------------------------------------------------------
 //
-//	Create a set of default presets.  We do this is the case that the 
+//	Create a set of default presets.  We do this in the case that the 
 //	default presets cannot be located
 //
 
@@ -441,6 +513,7 @@ void TNewProject::CreateDefaultPresets()
 	//
 	//	Create default set
 	//
+printf("In TNP::CreateDefaultPresets\n");
 
 	// Online Video 01
 	TPreset online01Preset("Online Video 01");

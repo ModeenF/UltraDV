@@ -86,7 +86,7 @@ void TStatusView::MessageReceived(BMessage* message)
 		// Update the status bar to display name of media cue
 		case UPDATE_STATUS_TEXT_MSG:
 			char *theStr;
-			message->FindString("StatusText", &theStr);
+			message->FindString("StatusText",(const char **) &theStr);
 			strcpy(m_Text, theStr);	
 			Invalidate();
 			break;

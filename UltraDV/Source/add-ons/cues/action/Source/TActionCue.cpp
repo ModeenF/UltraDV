@@ -27,7 +27,8 @@
 
 #include "AppConstants.h"
 #include "AppMessages.h"
-#include "MuseumUtils.h"
+// ABH #include "MuseumUtils.h"
+#include "BaseCueChunk.h"
 #include "ResourceManager.h"
 
 #include "TBitmapView.h"
@@ -134,7 +135,9 @@ void TActionCue::Init()
 	TCueView::Init();
 	
 	// Add the cue to the cue channel
-	if ( m_Channel->CanInsertCue(this, m_InsertPoint, true))
+// ABH
+//	if ( m_Channel->CanInsertCue(this, m_InsertPoint, true))
+//	if ( m_Channel->CanInsertCue((TCueView*)this, m_InsertPoint, true))
 	{
 		m_Channel->AddChild(this);
 		m_Channel->InsertCue(this, m_InsertPoint, m_InsertTime);		
@@ -358,7 +361,8 @@ void TActionCue::LoadCueIcon()
 	{
 		BRect area(0, 0+(kTimeTextHeight+kTimeTextOffset+3), kCueIconWidth-1, (kCueIconWidth-1)+(kTimeTextHeight+kTimeTextOffset+3));
 		area.OffsetBy(kResizeZoneWidth+5, 0);		
-		m_CueIcon = new TBitmapView(area, cueIcon, false);
+// ABH		m_CueIcon = new TBitmapView(area, cueIcon, false);
+		m_CueIcon = new TBitmapView(area, "ActionCue", cueIcon, false);
 		AddChild(m_CueIcon);		
 	}	
 }

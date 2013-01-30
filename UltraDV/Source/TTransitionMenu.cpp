@@ -16,7 +16,8 @@
 #include "BuildApp.h"
 
 #include <app/Application.h>
-#include <algobase.h>			// for min/max
+#include <algorithm>
+// ABH #include <algobase.h>			// for min/max
 
 //#include "AppConstants.h"
 //#include "AppMessages.h"

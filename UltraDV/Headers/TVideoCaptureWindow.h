@@ -13,6 +13,7 @@
 
 #ifndef __TVIDEOCAPTUREWINDOW_H__
 #define __TVIDEOCAPTUREWINDOW_H__
+#include <Window.h>
 
 // Constants
 
@@ -58,3 +59,4 @@ class TVideoCaptureWindow: public BWindow
 #define VIDCAP_STOP_MSG		'vcSM'
 
 #endif
+

@@ -13,7 +13,8 @@
  
 
 // TimeScaler states
-const enum
+//const 
+enum
 {
 	kOneFrame,
 	kQuarterSecond,

@@ -50,31 +50,31 @@ TPreset::TPreset(BMessage *data)
 	char 	*tmpStr;
 	int16 	tmpInt16;
 	
-	data->FindString("Name", &tmpStr);
+	data->FindString((const char *)"Name",(const char **) &tmpStr);
 	strcpy(m_Name, tmpStr);
 	
-	data->FindString("Description01", &tmpStr);
+	data->FindString("Description01", (const char **)&tmpStr);
 	strcpy(m_Description01, tmpStr);
 	
-	data->FindString("Description02", &tmpStr);
+	data->FindString((const char *)"Description02", (const char **)&tmpStr);
 	strcpy(m_Description02, tmpStr);
 
-	data->FindString("Description03", &tmpStr);
+	data->FindString((const char *)"Description03", (const char **)&tmpStr);
 	strcpy(m_Description03, tmpStr);
 
-	data->FindString("Description04", &tmpStr);
+	data->FindString((const char *)"Description04", (const char **)&tmpStr);
 	strcpy(m_Description04, tmpStr);
 
-	data->FindString("Description05", &tmpStr);
+	data->FindString((const char *)"Description05", (const char **)&tmpStr);
 	strcpy(m_Description05, tmpStr);
 
-	data->FindInt16("TimeBase", &tmpInt16);
+	data->FindInt16((const char *)"TimeBase", &tmpInt16);
 	m_Timebase = (timecode_type)tmpInt16;
 	
-	data->FindInt16("AudioCompressor", &tmpInt16);
+	data->FindInt16((const char *)"AudioCompressor", &tmpInt16);
 	m_AudioCompressor = (audio_compressor_type)tmpInt16;
 
-	data->FindInt16("VideoCompressor", &tmpInt16);
+	data->FindInt16((const char *)"VideoCompressor", &tmpInt16);
 	m_VideoCompressor = (video_compressor_type)tmpInt16;
 	
 	data->FindInt32("FrameWidth", &m_FrameWidth);
@@ -209,18 +209,72 @@ void TPreset::WriteToFile(char *theName)
 	
 	BFile theFile;
 	
-	// Write file to disk in our apps "presets" directory	
-	app_info appInfo;
-	be_app->GetAppInfo(&appInfo); 	
-	BEntry entry(&appInfo.ref);
+	// ABH Write file to disk in our apps "presets" directory	
+	// write file to disk in /boot/home/config/settings/UltraDV/settings
+
+//	app_info appInfo;
+//	be_app->GetAppInfo(&appInfo); 	
+//	BEntry entry(&appInfo.ref);
 	BDirectory parentDir;
-	entry.GetParent(&parentDir);
-	parentDir.SetTo(&parentDir, kPresetsPathString); 	
+	BEntry entry(kPresetsPathString);
+	if (!entry.Exists()){
+			printf("TPresets: kPresets path does not exist, creating...\n");
+			if (create_directory(kPresetsPathString,0770) != B_OK){
+				printf("TPreset: can't create kPresetsPathString - %s\n",
+						kPresetsPathString);
+			}
+	}
+//	char fullPath[64];
+//	strcpy(fullPath,kPresetsPathString);
+//	strcpy(fullPath, "UltraDV");
+	
+	if (entry.SetTo(kPresetsPathString) != B_OK){
+			printf("TPreset: SetTo in entry failed\n");
+	}
+	if (entry.GetParent(&parentDir) != B_OK){
+			printf("TPreset: Getparent failed\n");
+	}
+	
+	if ((retVal=parentDir.SetTo( kPresetsPathString)) != B_OK){
+			printf("TPreset: dir.SetTo failed\n");
+			switch(retVal){
+				case B_OK:
+					printf("B_OK\n");
+					break;
+				case B_ENTRY_NOT_FOUND:
+					printf("not found\n");
+					break;
+				case B_BAD_VALUE:
+					printf("bad value\n");
+					break;
+				case B_NO_MEMORY:
+					printf("no mem\n");
+					break;
+				case B_FILE_ERROR:
+					printf("file error\n");
+					break;
+				default:
+					printf("Other\n");
+			}
+	} 	
 	
 	retVal = parentDir.CreateFile(theName, &theFile, false); 
+
+/*
+	BEntry entry1(kPresetsPathString);
+	if (!entry1.Exists){
+		printf("TPresets: presets path does not exist\n");
+	}
+	BEntry entry2;
+	BDirectory currentDir;
+	entry_ref ref;
+	entry1.GetRef(&ref);
+	entry2.SetTo(&ref, true);
+*/
 	
-	if (retVal == B_OK)
-	{ 	
+
+	
+	if (retVal == B_OK) { 	
 		// Write out file	
 		theFile.Write(&theHeader, sizeof(theHeader));
 		archive->Flatten(&theFile);
@@ -243,6 +297,8 @@ void TPreset::WriteToFile(char *theName)
 			delete smallIcon;
 			delete largeIcon;	
 		}
+	} else {
+		printf("TPresets: CreateFile failed\n");
 	}
 }
 

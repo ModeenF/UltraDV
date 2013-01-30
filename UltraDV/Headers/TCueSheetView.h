@@ -12,6 +12,7 @@
 #define __TCUESHEETVIEW_H__
 
 #include <TimeCode.h>
+#include <assert.h>
 
 #include "AppTypes.h"
 
@@ -96,8 +97,10 @@ class TCueSheetView: public BView
 		void 	SetLiveUpdate(bool drag);
 				
 		// Accessor function
-		inline 	TCueSheetWindow *GetParent(){ return m_Parent; }
-		inline 	BList 			*GetChannelList(){ return m_ChannelList; }
+		inline 	TCueSheetWindow *GetParent(){ ASSERT(m_Parent); return m_Parent; }
+		inline 	BList 			*GetChannelList(){ printf("TCSV:GetChannelList.h: before return\n"); 
+									ASSERT(m_ChannelList);
+									return m_ChannelList; }
 		inline 	int32 			GetTotalChannels(){ return m_ChannelList->CountItems(); }
 				
 		inline	uint32		StartTime(){ return m_StartTime; }

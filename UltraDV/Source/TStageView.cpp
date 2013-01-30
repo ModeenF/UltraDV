@@ -20,6 +20,7 @@
 
 #include <app/Application.h>
 #include <support/Debug.h>
+#include <assert.h>
 
 #include "AppConstants.h"	
 #include "AppMessages.h"	
@@ -45,6 +46,9 @@
 
 // Constants
 
+#ifndef WATCH
+#define WATCH(x) printf(x)
+#endif
 	 
 //---------------------------------------------------------------------
 //	Constructor
@@ -159,6 +163,11 @@ void TStageView::Init()
 	m_ServiceThread = spawn_thread(service_routine, "StageView:Service", B_NORMAL_PRIORITY, this);
 	resume_thread(m_ServiceThread);	
 	
+// ABH
+	if (TimeSource()->IsRunning()){
+		WATCH("TSV::Init IsRunning == true!\n");
+	}
+	
 	//	Create run thread
 	m_RunThread = spawn_thread(run_routine, "StageView::Run", B_NORMAL_PRIORITY, this);	
 	resume_thread(m_RunThread);
@@ -257,8 +266,21 @@ void TStageView::StageDraw(BRect updateRect, uint32 theTime)
 	//	Clear offscreen bits
 	ClearOffscreen();
 	
+	printf("TSV::SD: start\n");
+	if (!m_Parent)
+		printf("TSV::SD m_Parent is null!\n");
+		
 	//	Get cue data at time
-	BList *channelList = m_Parent->GetCueSheet()->GetCueSheetView()->GetChannelList();				
+	TCueSheetWindow *testCueSheet = m_Parent->GetCueSheet();
+	if (!testCueSheet)
+		printf("TSV::SD testCueSheet is null!\n");
+	TCueSheetView *testCueSheetView = testCueSheet->GetCueSheetView();
+	if (!testCueSheetView)
+		printf("TSV::SD testCueSheetView is null!\n");
+	BList *channelList = m_Parent->GetCueSheet()->GetCueSheetView()->GetChannelList();		
+			
+	printf("TSV:SD: end\n");
+	
 	if (channelList)
 	{
 		for (int32 index = 0; index < channelList->CountItems(); index++)
@@ -723,6 +745,7 @@ BBitmap *TStageView::CreateComposite(int32 startID, int32 stopID, long theTime, 
 
 	// 	Find the cues that fall with in the updateRect and within the current time.  
 	//	Iterate through all of the cues, check their visible bounds and determine 
+	printf("TStageView::CreateComposite GetChannelList\n");
 	//	if they may be affected. If so, add the cue to the list	
 	for ( int32 index = startID; index < stopID; index++)
 	{
@@ -1070,48 +1093,43 @@ status_t TStageView::run_routine(void *data)
 
 void TStageView::RunRoutine()
 {
-	while(!m_TimeToQuit)
-	{
+	while(!m_TimeToQuit){
 		//	Is out time source running?
-		if (TimeSource()->IsRunning())
-		{
+		if (TimeSource()->IsRunning()){
 			const uint32 curTime = GetCurrentTime();
 			
+//			WATCH("TSV::RR IsRunning == true, so set IsPlaying = true\n");
 			//	We are now running...
-			if (m_IsPlaying == false)
-				m_IsPlaying = true;
+// ABH			if (m_IsPlaying == false)
+//				m_IsPlaying = true;
 						
 			//	Are we stopping?
-			if (m_IsPlaying == true && m_IsStopping == true)
-			{				
+			if (m_IsPlaying == true && m_IsStopping == true){				
+				WATCH("TSV::RR stopping...\n");
 				m_IsPlaying  = false;
 				m_IsStopping = false;
-				if (LockLooper())
-				{
+				if (LockLooper()){
 					StageDraw(Bounds(), curTime);
 					UnlockLooper();
 				}
 			}
 			
 			//	Handle playback
-			if (m_IsPlaying == true)
-			{
+			if (m_IsPlaying == true){
 				//	Draw data onto stage
-				if (LockLooper())
-				{
+				WATCH("TSV::RR playing..\n");
+				if (LockLooper()){
 					StageDraw(Bounds(), curTime);
 					UnlockLooper();
 				}
 			}
 		}
 		//	We have stopped.  Update stage.
-		else
-		{
-			if (m_IsPlaying == true)
-			{				
+		else {
+			if (m_IsPlaying == true) {				
 				m_IsPlaying  = false;
-				if (LockLooper())
-				{
+				WATCH("TSV::RR stopped so update state\n");
+				if (LockLooper()) {
 					StageDraw(Bounds(), GetCurrentTime());
 					UnlockLooper();
 				}

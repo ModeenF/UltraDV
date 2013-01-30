@@ -131,12 +131,15 @@ TCueSheetWindow::TCueSheetWindow(BMessage *data) : BWindow (data)
 	m_ExportZone 		= (TExportZone *)FindView("ExportZoneView");
 	m_Timeline 			= (TTimelineView *)FindView("TimelineView");
 	m_CueSheetView 		= (TCueSheetView *)FindView("CueSheetView");	
+	if (!m_CueSheetView)
+		printf("TCSW:TCSW m_CueSheetView is null!\n");
 	m_HScroll 			= (TCueSheetScrollBarH *)FindView("HCueScroll");	
 	m_VScroll 			= (TCueSheetScrollBarV *)FindView("VCueScroll");		
 	m_TimeScaler 		= (TTimeScalerView *)FindView("TimeScalerView");
 	
 		
 	//	Match CueChannels to CueChannelHeaders
+	printf("TCSW:TCSW GetChannelList start\n");
 	for(int32 index = 0; index < m_CueSheetView->GetChannelList()->CountItems(); index++)
 	{
 		TCueChannelHeader *header 	= (TCueChannelHeader *)m_HeaderContainer->ChildAt(index);
@@ -145,6 +148,8 @@ TCueSheetWindow::TCueSheetWindow(BMessage *data) : BWindow (data)
 		header->SetChannel(channel);
 		channel->SetHeader(header);
 	}
+		printf("TCSW:TCSW GetChannelList end\n");
+
 	
 	//	Set scrollbar targets
 	m_HScroll->SetTarget(m_CueSheetView);
@@ -1348,7 +1353,7 @@ void TCueSheetWindow::Save(BMessage *message)
 	message->FindRef("directory", &theRef);
 	
 	// Get name of file to be saved as
-	message->FindString("name", &theString);
+	message->FindString("name", (const char **)&theString);
 	
 	// Set window title to new filename
 	SetTitle(theString);		

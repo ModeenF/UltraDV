@@ -16,9 +16,9 @@
 #include "BuildApp.h"
 
 #include 	<app/Application.h>
-#include	<media/Subscriber.h>
+// ABH #include	<media/Subscriber.h>
 #include 	<support/Debug.h>
-#include 	<support/byteorder.h>
+#include 	<support/ByteOrder.h>
 
 
 #include "TMIDIEngine.h"

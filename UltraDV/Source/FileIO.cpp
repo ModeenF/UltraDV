@@ -19,6 +19,7 @@
 #include "AppTypes.h"
 
 #include "FileIO.h"
+#include "MuseumApp.h" // ABH
 
 //-------------------------------------------------------------------
 //	OpenCueSheet
@@ -30,7 +31,7 @@
 bool OpenCueSheet()
 {
 	// Display standard file open panel
-	ShowFileOpenPanel();
+	((MuseumApp *)be_app)->ShowFileOpenPanel(); // ABH added ::
 	
 	return true;
 }

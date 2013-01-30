@@ -30,6 +30,25 @@ class TRotateDialog;
 class __declspec(dllexport) TVisualCue : public TCueView
 {
 	public:
+		// ABH missing opacity methods???
+		BRect GetDrawArea();
+		void SetTransparency(float);
+		float GetTransparency();
+		int GetDuration();
+		BRect GetArea();
+		void SetArea(BRect);
+		BRect GetScaledArea();
+		BRect GetCroppedArea();
+		float GetRotation();
+		void SetRotation(float);
+		BPoint GetScale();
+		void SetScale(BPoint);
+		BPoint m_Scale;
+		bool HasTransitionIn();
+		bool HasTransitionOut();
+		BHandler *GetCueTransitionInButton();
+		BHandler *GetCueTransitionOutButton();
+
 		// 	Member Functions				
 		TVisualCue(int16 id, TCueChannel *parent, BRect bounds, uint32 startTime, char *cueName);
 		TVisualCue(entry_ref &theRef, int16 id, TCueChannel *parent, BRect bounds, uint32 startTime, char *cueName);
@@ -65,7 +84,7 @@ class __declspec(dllexport) TVisualCue : public TCueView
 		virtual void 	Init();
 		
 		virtual void	RenderBitmapData();
-		void 			DrawSubTicks(int32 index);
+		void 		DrawSubTicks(int32 index);
 								
 		// 	Cue Contents
 		virtual void	ShowContents();
@@ -77,10 +96,14 @@ class __declspec(dllexport) TVisualCue : public TCueView
 
 												
 		// Member Variables
+		// ABH
+		bool m_HasTransitionIn;
+		bool m_HasTransitionOut;
+		
 		TCuePosition	*m_CuePosition;
 			
-		sem_id			m_RenderSem;			//	Semaphore to handle access to bitmap
-		BBitmap			*m_Bitmap;				// Cue visual data
+		sem_id			m_RenderSem;	//	Semaphore to handle access to bitmap
+		BBitmap			*m_Bitmap;	// Cue visual data
 		
 		BBitmap			*m_TransformBitmap;
 		DisplayQuality	m_DisplayQuality;				

@@ -1,0 +1,12 @@
+Things to add to UltraDV:
+
+add validity check when loading project file /File/Load
+set time counter to 00:00:00 at start
+fix TimeSource::IsRunning
+finish AVIReader code
+validate and test hacked code parts (incomplete in original source)
+get new bitmap for splash
+
+
+Write docs
+

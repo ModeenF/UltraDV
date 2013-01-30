@@ -26,8 +26,8 @@
 
 
 // Constants
-const kSliderWidth  = 11;
-const kSliderHeight = 13;
+const int kSliderWidth  = 11;
+const int kSliderHeight = 13;
 
 //---------------------------------------------------------------------
 //	Constructor

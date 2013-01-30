@@ -1,0 +1,39 @@
+TCueEffect.h:
+
+#define TKeyFrameContainer list<TKeyFrame>
+
+#define TKeyFrameIterator TKeyFrameContainer::const_iterator - list<TKeyFrame>::const_iterator
+
+#define TKeyFrameIterator_vol TKeyFrameContainer::iterator - list<TKeyFrame>::iterator
+
+TKeyFrameContainer m_keyFrames; - list<TKeyFrame> m_keyFrames;
+
+
+TCueEffect.cpp:
+
+TKeyFrameIterator_vol kf = 
+	m_keyFrames.insert(later);
+	
+list<TKeyFrame>::iterator kf = (list<TKeyFrame>)m_keyFrames.insert((TKeyFrameIterator_vol) later);
+
+
+TCueEffect.cpp: In member function:
+	'std::list<TKeyFrame>::const_iterator TCueEffect::MarkKeyFrame(uint32)':
+
+note: std::list<_Tp, _Alloc>::iterator std::list<_Tp, _Alloc>::insert(std::list<_Tp, _Alloc>::iterator, const value_type&)
+ 
+[with _Tp = TKeyFrame, _Alloc = std::allocator<TKeyFrame>, std::list<_Tp, _Alloc>::iterator = std::_List_iterator<TKeyFrame>, 
+std::list<_Tp, _Alloc>::value_type = TKeyFrame]
+
+note:   candidate expects 2 arguments, 1 provided
+note: void std::list<_Tp, _Alloc>::insert(std::list<_Tp, _Alloc>::iterator, std::list<_Tp, _Alloc>::size_type, const value_type&)
+ 
+[with _Tp = TKeyFrame, _Alloc = std::allocator<TKeyFrame>, std::list<_Tp, _Alloc>::iterator = std::_List_iterator<TKeyFrame>, 
+std::list<_Tp, _Alloc>::size_type = long unsigned int, std::list<_Tp, _Alloc>::value_type = TKeyFrame]
+
+note:   candidate expects 3 arguments, 1 provided
+note: template<class _InputIterator> void std::list::insert(std::list<_Tp, _Alloc>::iterator, _InputIterator, _InputIterator) 
+[with _InputIterator = _InputIterator, _Tp = TKeyFrame, _Alloc = std::allocator<TKeyFrame>, 
+std::list<_Tp, _Alloc>::iterator = std::_List_iterator<TKeyFrame>]
+
+

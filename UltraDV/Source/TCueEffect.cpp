@@ -29,6 +29,8 @@
 
 #include "TCueEffect.h"
 
+using namespace std;
+
 // Constants
 	// Names used in a message
 const char* TCueEffect::kStartLabel = "startTime";
@@ -275,7 +277,11 @@ void TCueEffect::SetDefaultKeyFrames()
 //
 //
 
-TCueEffect::TKeyFrameIterator TCueEffect::MarkKeyFrame(uint32 time)
+// ABH
+
+//TCueEffect::TKeyFrameIterator TCueEffect::MarkKeyFrame(uint32 time)
+
+TKeyFrameIterator TCueEffect::MarkKeyFrame(uint32 time)
 {
 	// Convert from a global to a local time value
 	time -= m_startTime;
@@ -302,9 +308,14 @@ TCueEffect::TKeyFrameIterator TCueEffect::MarkKeyFrame(uint32 time)
 	}
 
 	// Create a key frame here
-	TKeyFrameIterator_vol kf = m_keyFrames.insert(later);
-	(*kf).m_time = time;
-	(*kf).m_state = NewEffectState();
+	TKeyFrameIterator_vol kf;
+// ABH!
+//	kf  = m_keyFrames.insert(later);
+	kf = later; 		// dirty hack to get a compile
+	
+//	(*kf).m_time = time;
+//	(*kf).m_state = NewEffectState();
+printf("TCueEffect::MarkKeyFrame - Needs to be implemented!\n");
 
 	// Interpolate a reasonable value
 	Interpolate(kf);
@@ -318,7 +329,11 @@ TCueEffect::TKeyFrameIterator TCueEffect::MarkKeyFrame(uint32 time)
 //
 //
 
-void TCueEffect::RemoveKeyFrame(TCueEffect::TKeyFrameIterator kf)
+// ABH
+
+//void TCueEffect::RemoveKeyFrame(TCueEffect::TKeyFrameIterator kf)
+
+void TCueEffect::RemoveKeyFrame(TKeyFrameIterator kf)
 {
 	// Can't remove the first or last key frame
 	if (kf == m_keyFrames.begin() || kf == LastKeyFrame())
@@ -334,7 +349,11 @@ void TCueEffect::RemoveKeyFrame(TCueEffect::TKeyFrameIterator kf)
 //
 //
 
-void TCueEffect::MoveKeyFrame(TCueEffect::TKeyFrameIterator kf, uint32 newTime)
+// ABH
+
+//void TCueEffect::MoveKeyFrame(TCueEffect::TKeyFrameIterator kf, uint32 newTime)
+
+void TCueEffect::MoveKeyFrame(TKeyFrameIterator kf, uint32 newTime)
 {
 	// Can't move the first or last key frame
 	if (kf == m_keyFrames.begin() || kf == LastKeyFrame())
@@ -353,7 +372,11 @@ void TCueEffect::MoveKeyFrame(TCueEffect::TKeyFrameIterator kf, uint32 newTime)
 //
 //
 
-TCueEffect::TKeyFrameIterator_vol TCueEffect::LastKeyFrame(void) const
+// ABH
+
+//TCueEffect::TKeyFrameIterator_vol TCueEffect::LastKeyFrame(void) const
+
+TKeyFrameIterator_vol TCueEffect::LastKeyFrame(void) const
 {
 	// force 'end()' to return a non-const iterator
 	TCueEffect* volatileMe = const_cast<TCueEffect*>(this);
@@ -368,8 +391,16 @@ TCueEffect::TKeyFrameIterator_vol TCueEffect::LastKeyFrame(void) const
 //
 //
 
-TCueEffect::TKeyFrameIterator_vol TCueEffect::VolatileIterator(
-		TCueEffect::TKeyFrameIterator kf) const
+// ABH
+//TCueEffect::TKeyFrameIterator_vol TCueEffect::VolatileIterator(
+
+TKeyFrameIterator_vol TCueEffect::VolatileIterator(
+
+// ABH
+
+//		TCueEffect::TKeyFrameIterator kf) const
+
+		TKeyFrameIterator kf) const
 {
 	// TODO: isn't there a way to just cast one of these puppies?
 
@@ -393,7 +424,11 @@ TCueEffect::TKeyFrameIterator_vol TCueEffect::VolatileIterator(
 //
 //
 
-bool TCueEffect::KeyFrameState(TCueEffect::TKeyFrameIterator kf, 
+// ABH
+
+//bool TCueEffect::KeyFrameState(TCueEffect::TKeyFrameIterator kf, 
+
+bool TCueEffect::KeyFrameState(TKeyFrameIterator kf, 
 		const TEffectState* state) const
 {
 	TKeyFrameIterator_vol v = VolatileIterator(kf);

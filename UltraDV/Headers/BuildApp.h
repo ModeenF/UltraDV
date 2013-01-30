@@ -25,16 +25,16 @@
 //
 
 // _BUILDING_MUSEUM
-#define _BUILDING_MUSEUM true
+// ABH #define _BUILDING_MUSEUM true
 
 /*	trinity_build.h	*/
 
 #include <BeBuild.h>
 
 #ifdef _BUILDING_MUSEUM
-	#define _IMPEXP_MUSEUM __declspec(dllexport)
+	#define _IMPEXP_MUSEUM //__declspec(dllexport)
 #else
-	#define _IMPEXP_MUSEUM __declspec(dllimport)
+	#define _IMPEXP_MUSEUM //__declspec(dllimport)
 #endif
 
 class _IMPEXP_MUSEUM MuseumApp;

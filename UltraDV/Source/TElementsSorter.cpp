@@ -66,11 +66,10 @@ TElementsSorter::~TElementsSorter()
 	// Clear out our sorter list
 	if (m_SorterList)
 	{
-		for (int32 index = 0; index < m_SorterList->CountItems(); index++)		
-		{
-			TSorterContainer * theSorter = static_cast<TSorterContainer *>(m_SorterList->ItemAt(index));
-			if (theSorter)
-				delete theSorter;
+	    for (int32 index = 0; index < m_SorterList->CountItems(); index++){
+	  	TSorterContainer * theSorter = static_cast<TSorterContainer *>(m_SorterList->ItemAt(index));
+		    if (theSorter)
+			delete theSorter;
 		}
 	}
 }

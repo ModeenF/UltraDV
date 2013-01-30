@@ -38,11 +38,11 @@ __declspec(dllexport) bool 			GetString(const char *theResource, int32 id, char 
 
 // Resource Structures
 
-typedef struct cicn
+typedef struct // cicn ABH
 {
 	int16	width;
 	int16	height;
 	void 	*data;	
-};
+} cicn;
 
 #endif

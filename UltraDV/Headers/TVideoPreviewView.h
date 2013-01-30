@@ -16,11 +16,11 @@
 
 //	Includes
 #include <BufferConsumer.h>
-#include <TimedBufferQueue.h>
 #include <Window.h>
 #include <View.h>
 #include <Bitmap.h>
 #include <MediaNode.h>
+#include "TimedBufferQueue.h"
 
 
 // Class Declarations

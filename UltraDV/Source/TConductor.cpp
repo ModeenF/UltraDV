@@ -24,17 +24,18 @@
 /*																				*/
 /*		SUPERCLASS:	CConductor													*/
 /*																				*/
-/*		Copyright © 1992 Passport Designs										*/
+/*		Copyright  1992 Passport Designs										*/
 /*		Written By: Glenn Ruehle												*/
 /*																				*/
 /*																				*/ 
 /********************************************************************************/
 
-#include "CProducerConductor.h"
-#include "CMIDICue.h"
+// ABH missing
+//#include "CProducerConductor.h"
+//#include "CMIDICue.h"
 
-#include <CArray.h>
-#include <TBUtilities.h>
+//#include <CArray.h>
+//#include <TBUtilities.h>
 
 
 

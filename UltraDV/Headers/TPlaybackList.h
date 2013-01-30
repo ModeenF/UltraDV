@@ -16,6 +16,10 @@
 
 #pragma once
 
+// ABH missing include
+#include <be/support/List.h>
+#include "TCueView.h"
+
 // Class definitions
 class TPlaybackList : public BList
 {

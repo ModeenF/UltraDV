@@ -36,12 +36,16 @@
 #define MSIPL_DEF_TEMPARG
 
 // declarations
+
 class TCueData;
+
 #include "TKeyFrame.h"
+
 #include <list>
 #include <string>
 #include <vector>
 
+using namespace std;
 //=================
 // Message Defs
 //
@@ -98,7 +102,10 @@ struct TEffectState : public BArchivable {
 class TCueEffect : public BArchivable {
 protected:
 		// This is the container used to hold key frames
-	typedef list<TKeyFrame> TKeyFrameContainer;
+// ABH	typedef list<TKeyFrame> TKeyFrameContainer;
+#define TKeyFrameContainer list<TKeyFrame>
+
+//	list<TKeyFrame> TKeyFrameContainer;
 
 public:
 	// METHODS
@@ -156,7 +163,13 @@ public:
 		// Helpful type decls
 		// The iterator type. The world at large just gets a const
 		// iterator.
-	typedef TKeyFrameContainer::const_iterator TKeyFrameIterator;
+// ABH
+
+//	typedef TKeyFrameContainer::const_iterator TKeyFrameIterator;
+//	TKeyFrameContainer::const_iterator TKeyFrameIterator;
+
+#define TKeyFrameIterator TKeyFrameContainer::const_iterator
+
 		// Make the key frames be simply default values at the start
 		// and the end of the effect
 	void SetDefaultKeyFrames();
@@ -217,7 +230,11 @@ private:
 
 	// Types
 		// A volatile iterator type for local use only. 
-	typedef TKeyFrameContainer::iterator TKeyFrameIterator_vol;
+		
+// ABH
+//	typedef TKeyFrameContainer::iterator TKeyFrameIterator_vol;
+
+#define TKeyFrameIterator_vol TKeyFrameContainer::iterator 
 
 	// Methods
 		// Return the last key frame in the bunch, the one that marks the 

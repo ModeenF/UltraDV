@@ -22,7 +22,7 @@
 #include "AppAlerts.h"
 #include "AppMessages.h"
 #include "MuseumApp.h"
-#include "MuseumUtils.h"
+//ABH #include "MuseumUtils.h"
 
 #include "TStageView.h"
 #include "TStagePictureCue.h"
@@ -42,7 +42,8 @@ const short kBorder = 6;
 //
 //
 
-TStagePictureCue::TStagePictureCue(BRect bounds, char *name, TCueView *theCue) : TStageCue(bounds, name, theCue)
+//ABH old - TStagePictureCue::TStagePictureCue(BRect bounds, char *name, TCueView *theCue) : TStageCue(bounds, name, theCue)
+TStagePictureCue::TStagePictureCue(BRect bounds, char *name, TCueView *theCue) 
 {
 	// Do default initialization
 	Init();

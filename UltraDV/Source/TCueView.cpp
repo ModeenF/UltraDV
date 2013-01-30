@@ -59,6 +59,7 @@
 #include "TTransitionMenu.h"
 
 #include "TCueView.h"
+#include "BaseCueChunk.h"
 
 //---------------------------------------------------------------------
 //	Constructor
@@ -84,6 +85,85 @@ TCueView::TCueView(int16 id, TCueChannel *parent, BRect bounds, uint32 startTime
 	
 	// Save start time for later initialization
 	m_InsertTime 	= startTime;
+		
+	// Set these variables to NULL
+	m_File 		  = NULL;
+	m_AntThread   = NULL;
+	m_EffectsList = NULL;
+	
+	//	Set these to false
+	m_EditorOpen = false;
+	
+	// Set buttons to NULL
+	m_LockButton 			= NULL;
+	m_MuteButton 			= NULL;
+}
+
+//---------------------------------------------------------------------
+//	ABH - missing Constructor
+//---------------------------------------------------------------------
+//
+//
+
+TCueView::TCueView(int16 id, TCueChannel *parent, BRect bounds, BPoint point, uint32 startTime, char *name) : 
+		  BView(bounds, name, B_FOLLOW_LEFT | B_FOLLOW_TOP_BOTTOM, B_WILL_DRAW|B_FRAME_EVENTS ),
+		  BMediaNode("CueNode")
+{	
+	// do something with scale, save it???
+	m_InsertPoint = point; // ???
+
+	// Get cue ID
+	m_ID = id;
+	
+	// Save parent
+	m_Channel = parent;
+	
+	// Save start time and bounds
+	m_StartTime = startTime;
+	
+	
+	// The BView class will set this to true when it is done
+	m_IsInstantiated = false;
+	
+	// Save start time for later initialization
+	m_InsertTime 	= startTime;
+		
+	// Set these variables to NULL
+	m_File 		  = NULL;
+	m_AntThread   = NULL;
+	m_EffectsList = NULL;
+	
+	//	Set these to false
+	m_EditorOpen = false;
+	
+	// Set buttons to NULL
+	m_LockButton 			= NULL;
+	m_MuteButton 			= NULL;
+}
+
+
+//
+// ABH new constructor
+//
+
+TCueView::TCueView(BaseCueChunk *TheChunk, TCueChannel *parent, BRect bounds, char *name) : 
+		  BView(bounds, name, B_FOLLOW_LEFT | B_FOLLOW_TOP_BOTTOM, B_WILL_DRAW|B_FRAME_EVENTS ),
+		  BMediaNode("CueNode")
+{	
+	// Get cue ID
+//	m_ID = id;
+	
+	// Save parent
+	m_Channel = parent;
+	
+	// Save start time and bounds
+	m_StartTime = TheChunk->startTime;
+	
+	// The BView class will set this to true when it is done
+	m_IsInstantiated = false;
+	
+	// Save start time for later initialization
+//	m_InsertTime 	= startTime;
 		
 	// Set these variables to NULL
 	m_File 		  = NULL;
@@ -265,6 +345,9 @@ TCueView::~TCueView()
 
 void TCueView::Init()
 {				
+// ABH
+	m_Rotation = 0;
+
 	// We handle our own drawing
 	SetViewColor(B_TRANSPARENT_32_BIT);
 
@@ -409,6 +492,17 @@ void TCueView::Init()
 	media_node timeSource = m_Channel->GetCueSheet()->GetParent()->GetPlaybackEngine()->GetTimeSource();
 	retVal = BMediaRoster::Roster()->SetTimeSourceFor(Node().node, timeSource.node);
 	retVal = BMediaRoster::Roster()->StartNode(Node(), 0);
+}
+
+//
+// missing function
+//
+void TCueView::Init(BaseCueChunk *TheChunk){
+
+// Should probably do more, but what?
+	
+Init();
+	
 }
 
 #pragma mark -
@@ -619,6 +713,48 @@ void TCueView::Draw(BRect updateRect)
 	Looper()->Unlock();
 }
 
+// ABH missing function???
+
+uint32 TCueView::GetDuration(){
+	printf("GetDuration called\n");
+	return m_Duration;
+}
+
+// ABH missing function
+
+void TCueView::SetTransitionInID(uint32 id){
+	m_TransitionInID = id;
+}
+
+// ABH missing function
+
+void TCueView::SetTransitionOutID(uint32 id){
+	m_TransitionOutID = id;
+}
+
+// ABH missing function
+
+void TCueView::SetTransitionInDuration(uint32 length){
+	m_TransitionInDuration = length;
+}
+
+// ABH missing function
+
+void TCueView::SetTransitionOutDuration(uint32 length){
+	m_TransitionOutDuration = length;
+}
+
+// ABH missing function
+
+uint32 TCueView::GetTransitionInDuration(){
+	return m_TransitionInDuration;
+}
+
+// ABH missing function
+
+uint32 TCueView::GetTransitionOutDuration(){
+	return m_TransitionOutDuration;
+}
 //---------------------------------------------------------------------
 //	DrawDurationDelta
 //---------------------------------------------------------------------
@@ -3071,3 +3207,4 @@ void TCueView::RunRoutine()
 		}
 	}
 }
+

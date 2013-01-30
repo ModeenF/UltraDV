@@ -17,7 +17,14 @@
 
 #include <app/Application.h>
 #include <support/Debug.h>
-#include <algobase.h>			// for min/max
+
+// ABH
+#ifdef GCC4
+//#include <algobase.h>			// for min/max
+#include "/boot/develop/abi/x86/gcc4/tools/gcc-4.6.3-haiku-121101/include/c++/4.6.3/bits/algobase.h"
+#elsif GCC2
+#include <algobase.h>
+#endif
 
 #include "TCueMenu.h"
 #include "TCueView.h"

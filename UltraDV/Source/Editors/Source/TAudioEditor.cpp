@@ -510,7 +510,7 @@ void TAudioEditor::Save(BMessage *message)
 	message->FindRef("directory", &theRef);
 	
 	// Get name of file to be saved as
-	message->FindString("name", &theString);
+	message->FindString("name", (const char**)&theString);
 	
 	// Create a BDirectory object
 	BDirectory saveDir(&theRef);

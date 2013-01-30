@@ -22,8 +22,10 @@
 #include "AppAlerts.h"
 #include "AppMessages.h"
 #include "MuseumApp.h"
-#include "MuseumUtils.h"
-#include "MediapedeVideo.h"
+
+// ABH these 2 do not exist
+//#include "MuseumUtils.h"
+//#include "MediapedeVideo.h"
 
 #include "TStageView.h"
 #include "TStageMovieCue.h"

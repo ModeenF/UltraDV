@@ -1,18 +1,39 @@
+//
+//
+// TimedBufferQueue.cpp
+//
+// ABH would not compile, as provided
 
 #include <OS.h>
+using namespace std;
 
+
+#include <map> //ABH file not found
+
+#include <string>
 #include "TimedBufferQueue.h"
 
-
-
-#if defined(__GNUC__) && defined(__INTEL__)
+#ifdef ABH
+#include "/boot/develop/abi/x86/gcc4/tools/gcc-4.6.3-haiku-121101/include/c++/4.6.3/bits/stl_multimap.h"// ABH
+//#if defined(__GNUC__) && defined(__INTEL__)
+//#include <stl_multimap.h>
+#ifdef GCC4
+//#include "/boot/develop/abi/x86/gcc4/tools/gcc-4.6.3-haiku-121101/include/c++/4.6.3/bits/multimap.h"
+#elsif
 #include <multimap.h>
-#include <realtime_allocator.h>
-typedef multimap<bigtime_t, BBuffer *, less<bigtime_t>, realtime_allocator<BBuffer *, realtime_blocks_256> > buffer_map;
-#else
-#include <map>
-typedef multimap<bigtime_t, BBuffer *> buffer_map;
 #endif
+#endif
+
+#define assert(X)
+// ABH #include "realtime_allocator.h"
+
+// ABH typedef multimap<bigtime_t, BBuffer *, less<bigtime_t>, realtime_allocator<BBuffer *, realtime_blocks_256> > buffer_map;
+
+
+//#else
+//#include <map>
+typedef multimap<bigtime_t, BBuffer *> buffer_map;
+//#endif
 
 
 class _buffer_queue_imp {

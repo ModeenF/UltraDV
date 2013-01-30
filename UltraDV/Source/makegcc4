@@ -1,0 +1,27 @@
+setgcc gcc4
+cd Editors/Source
+make
+make SO
+cd ../../Engines/Source
+pwd
+make
+make SO
+cd ../../Sorter
+pwd
+make
+make SO
+cd ../Transitions/Source
+pwd
+make
+make SO
+cd ../../add-ons/cues/action/Source
+pwd
+make
+make SO
+cd ../../media/Source
+pwd
+make 
+make SO
+cd ../../..
+pwd
+make

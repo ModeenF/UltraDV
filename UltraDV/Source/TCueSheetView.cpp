@@ -17,6 +17,7 @@
 
 #include <app/Application.h>
 #include <support/Debug.h>
+#include <assert.h>
 
 #include "AppAlerts.h"
 #include "AppConstants.h"
@@ -61,6 +62,7 @@ TCueSheetView::TCueSheetView(BRect bounds, TCueSheetWindow *parent) :
 			   BView(bounds, "CueSheetView", B_FOLLOW_ALL, B_WILL_DRAW|B_DRAW_ON_CHILDREN)
 {
 	m_Parent = parent;
+	ASSERT(parent);
 	
 	// Perform default initialization
 	Init();	
@@ -114,7 +116,9 @@ TCueSheetView::TCueSheetView(BMessage *data) : BView(data)
 			
 	// Create channel list
 	m_ChannelList = new BList();
-	ASSERT(m_ChannelList);		
+	ASSERT(m_ChannelList);
+	if (!m_ChannelList)
+			printf("TCSV::TCSV: channelList null!\n");		
 }
 
 
@@ -204,7 +208,9 @@ BArchivable *TCueSheetView::Instantiate(BMessage *archive)
 
 	if ( validate_instantiation(archive, "TCueSheetView") ) 
 		return new TCueSheetView(archive); 
-		
+	else {
+		printf("TCSV:Instantiate failed!\n");	
+	}	
 	return NULL; 
 }
 
