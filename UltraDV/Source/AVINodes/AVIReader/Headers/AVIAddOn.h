@@ -14,7 +14,7 @@ class AVIAddOn : public BMediaAddOn {
 public:
 	AVIAddOn(image_id);
 	~AVIAddOn();
-	virtual BMediaAddOn *make_media_addon(image_id);
+// ABH	virtual BMediaAddOn *make_media_addon(image_id);
 
 private:
 	status_t InitCheck(const char **);

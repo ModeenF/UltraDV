@@ -146,7 +146,8 @@ bool TCinepakCodec::DecodeFrame(AVIVideoFrame *theFrame, void *dstBuffer, uint16
 //	Decode Cinepak "Compact Video" Algorithm 'cvid'
 //
 
-bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuffer, int32 bufSize, void *dstBuffer)
+bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuffer, 
+			int32 bufSize, void *dstBuffer)
 {
 	int32 	cr, cg, cb; 
 	int32 	Y, red, green, blue;
@@ -180,15 +181,15 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 	length |= (*srcPtr++) << 8; 
 	length |= (*srcPtr++);
 	
+	printf("DecodeCinepakFrame: length=%d, bufSize=%d\n", length, bufSize);
+	
 	//	Check for corrupt frame
-	if (length != bufSize)
-	{ 
+	if (length != bufSize){ 
 		//	Pad
 		if (length & 0x01) 
 			length++;
 			
-		if (length != bufSize)
-		{
+		if (length != bufSize){
 			#ifdef DEBUG
 				printf("Data corruption.  Skipping frame... %x %x\n", bufSize, length);
 			#endif
@@ -211,13 +212,11 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 	stripNum |= *srcPtr++;
 	
 	#ifdef DEBUG
-		printf("Cinepak <%lx %lx> strips %lx\n", xSize, ySize, stripNum);
+		printf("Cinepak <%ld %ld> strips %ld\n", xSize, ySize, stripNum);
 	#endif
 	
-	if (stripNum > m_NumColorMaps)
-	{ 
-		if (stripNum >= kCinepakMaxStrips) 
-		{
+	if (stripNum > m_NumColorMaps){ 
+		if (stripNum >= kCinepakMaxStrips) {
 			#ifdef DEBUG
 				printf("Cinepak strip overflow\n");
 			#endif
@@ -225,12 +224,10 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 			return false;
 		}
 		
-		for( index = m_NumColorMaps; index < stripNum; index++)
-		{
+		for( index = m_NumColorMaps; index < stripNum; index++){
 			colorMap = (CinepakColor *)malloc( 1040 * sizeof(CinepakColor) );
 			
-			if (colorMap == 0) 
-			{
+			if (colorMap == 0) {
 				#ifdef DEBUG
 					printf("Color map allocation failure\n");
 				#endif
@@ -240,8 +237,7 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 			
 			colorMap = (CinepakColor *)malloc( 1040 * sizeof(CinepakColor) );
 			
-			if (colorMap == 0) 
-			{
+			if (colorMap == 0) {
 				#ifdef DEBUG
 					printf("Color map allocation failure\n");
 				#endif
@@ -254,8 +250,7 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 	
 	
 	//	Decode strips
-	for( strip = 0; strip < stripNum; strip++ )
-	{ 
+	for( strip = 0; strip < stripNum; strip++ ){ 
 		CinepakColor *colorMap0, *colorMap1;
 		int32 topSize, x = 0;
 	
@@ -263,8 +258,7 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 		colorMap1 = m_CinepakMaps1[strip];
 		
 		
-		if ( strip && (copyFlag == true))
-		{ 			
+		if ( strip && (copyFlag == true)){ 			
 			CinepakColor *src,*dst;
 			
 			src = m_CinepakMaps0[strip-1]; 
@@ -298,15 +292,13 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 		yTop 	+= y1;
 		topSize -= 12;
 		
-		if (x1 != width) 
-		{
+		if (x1 != width) {
 			#ifdef DEBUG
 				printf("Cinepak Warning x1(%lx) != width(%lx)\n",x1,width);
 			#endif
 		}
 	
-		while(topSize > 0)
-		{ 
+		while(topSize > 0){ 
 			uint32 	chunkID; 
 			int32 	chunkSize;
 			
@@ -318,8 +310,7 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 			topSize 	-= chunkSize;
 			chunkSize 	-= 4;
 			
-			switch(chunkID)
-			{
+			switch(chunkID)	{
 				//	Color Palette
 				case 0x2000: 
 				case 0x2200: 
@@ -334,8 +325,7 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 					
 					chunkNum = chunkSize / 6;  
 					
-					for(index = 0; index < chunkNum; index++) 
-					{ 
+					for(index = 0; index < chunkNum; index++) { 
 						yPtr = srcPtr;
 						
 						//	Skip luma
@@ -347,8 +337,7 @@ bool TCinepakCodec::DecodeCinepakFrame(uint32 width, uint32 height, void *srcBuf
 						cb = m_UBTable[U];
 						cg = (m_UGTable[U] + m_VGTable[V])>>16;
 				
-						for(j = index; j < 1024; j += 256)
-						{ 
+						for(j = index; j < 1024; j += 256){ 
 							Y 	  = (int32)*yPtr++;	
 							red   = rangeLimit[Y + cr]; 
 							green = rangeLimit[Y + cg]; 

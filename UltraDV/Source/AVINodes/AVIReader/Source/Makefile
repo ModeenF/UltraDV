@@ -1,9 +1,15 @@
 NAME= AVIReader
 TYPE= LIB
-SRCS= AVIAddOn.cpp AVIApp.cpp AVIProducer.cpp AVIView.cpp AVIViewer.cpp AVIWindow.cpp
+SRCS= AVIAddOn.cpp AVIApp.cpp AVIProducer.cpp AVIView.cpp AVIViewer.cpp AVIWindow.cpp make_media_addon.cpp TBitmapView.cpp
 
-LIBS= /boot/develop/lib/x86/libroot.so /boot/develop/lib/x86/libbe.so /boot/develop/lib/x86/libmedia.so /boot/develop/lib/x86/libjpeg.so stdc++
-LIBPATHS=
+LIBS= be root media tracker midi stdc++ \
+/boot/home/Desktop/UltraDV/so4/AVINodesShared.so \
+/boot/home/Desktop/UltraDV/so4/AVIWriter.so 
+#/boot/home/Desktop/UltraDV/so4/Media.so
+#/boot/home/Desktop/UltraDV/so4/DVlib.so \
+
+LIBPATHS= /boot/home/Desktop/UltraDV/so4 /boot/develop/lib/x86/gcc4/lib
+
 SYSTEM_INCLUDE_PATHS= /boot/develop/headers/be /boot/develop/headers/cpp /boot/develop/headers/posix /boot/home/config/include
 LOCAL_INCLUDE_PATHS=  /boot/home/Desktop/UltraDV/Headers \
 /boot/home/Desktop/UltraDV/Source/Editors/Headers \
@@ -34,13 +40,6 @@ LINKER_FLAGS=
 
 ## include the makefile-engine
 include $(BUILDHOME)/etc/makefile-engine
-
-SO2:
-	cd objects.x86-gcc2-release; gcc -shared -o Sorter.so *.o
-	cp objects.x86-gcc2-release/Sorter.so ../../../so
-
-SO4:
-	cd objects.x86-gcc4-release; gcc -shared -o Sorter.so *.o; cp Sorter.so ../../../so4/Sorter.so
 
 OBJ:
 	cd objects.x86-gcc4-release;  cp *.o ../../link

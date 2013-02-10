@@ -15,6 +15,11 @@
 #ifndef __AVIWINDOW_H__
 #define __AVIWINDOW_H__
 
+// ABH added this
+#include "AVIView.h"
+#include "TBitmapView.h"
+
+
 //	Forward declarations
 class TVideoCodec;
 class TRIFFReader;

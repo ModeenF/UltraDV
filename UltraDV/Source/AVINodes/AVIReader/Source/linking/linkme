@@ -1,0 +1,1 @@
+gcc -o AVIReader *.o   -L./  -L/boot/home/Desktop/UltraDV/so4  -L/boot/develop/lib/x86/gcc4/lib  /boot/home/Desktop/UltraDV/so4/AVINodesShared.so /boot/home/Desktop/UltraDV/so4/AVIWriter.so /boot/home/Desktop/UltraDV/so4/Media.so   -lbe  -lroot  -lmedia  -ltranslation  -ltracker  -lstdc++  -lmidi 

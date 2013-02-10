@@ -1,6 +1,7 @@
 # --- DO NOT MODIFY THIS LINE -- AUTO-DEPENDS FOLLOW ---
 objects.x86-gcc4-release/TRIFFReader.o : \
     /boot/home/Desktop/UltraDV/Source/AVINodes/Shared/Headers/TRIFFReader.h \
+    /boot/home/Desktop/UltraDV/Source/AVINodes/Shared/Headers/InfoAlert.h \
     /boot/home/Desktop/UltraDV/Source/AVINodes/Shared/Headers/TRGBCodec.h \
     /boot/home/Desktop/UltraDV/Source/AVINodes/Shared/Headers/TMSVideoCodec.h \
     /boot/home/Desktop/UltraDV/Source/AVINodes/Shared/Headers/TMSRLECodec.h \

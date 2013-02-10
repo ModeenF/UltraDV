@@ -15,7 +15,7 @@
 
 //	Includes
 #include <Debug.h>
-#include <iostream> // ABH
+//#include <iostream> // ABH
 
 #include "BuildApp.h"
 
@@ -30,10 +30,12 @@
 #include "TMSRLECodec.h"
 #include "TMSVideoCodec.h"
 #include "TRGBCodec.h"
+#include "InfoAlert.h"
 
 
 #include "TRIFFReader.h"
 
+//#define ABH
 
 //	Macros
 #define ChunkName(a,b,c,d) (                 	\
@@ -94,7 +96,7 @@ TRIFFReader::TRIFFReader(BFile *file)
 	//	Save pointer to file
 	m_File = file;
 			
-	//	Defualt initialization
+	//	Default initialization
 	Init();	
 }
 
@@ -154,7 +156,7 @@ TRIFFReader::~TRIFFReader()
 //	Init
 //-------------------------------------------------------------------
 //
-//	Perform defualt initialization
+//	Perform default initialization
 //
 
 void TRIFFReader::Init() 
@@ -169,8 +171,7 @@ void TRIFFReader::Init()
 	m_VideoCodec		= NULL;
 	m_AudioFrameCount 	= 0;
 	
-	for(int32 index = 0; index < kRiffMaxStreams; index++)
-	{ 
+	for(int32 index = 0; index < kRiffMaxStreams; index++){ 
 		m_StreamType[index] = 0; 
 		m_StreamOK[index] 	= false; 
 	}
@@ -186,8 +187,12 @@ void TRIFFReader::Init()
 	bool retVal = ParseAVIFile();
 	
 	//	Abort if failure
-	if (retVal == false)
+	if (retVal == false){
+		// ABH display dialog for unhandled video format
+		InfoAlert("Unsupported Video Format");
 		be_app->PostMessage(B_QUIT_REQUESTED);
+		return;
+	}
 		
 	//	Init Codecs
 	retVal = InitCodecs();
@@ -306,7 +311,8 @@ bool TRIFFReader::ParseAVIFile()
 			case kRiff_00AM_Chunk:
 			case kRiff_DISP_Chunk:						
 			case kRiff_ISBJ_Chunk:
-			case kRiff_JUNK_Chunk:									
+			case kRiff_JUNK_Chunk:		
+			case kRiff_strn_Chunk:							
 				{
 					//	Pad
 					if (chunkSize & 0x01) 
@@ -318,18 +324,18 @@ bool TRIFFReader::ParseAVIFile()
 				break;
 			
 			//	Handle all others and end of file
-			default:
-				{
+			default:{
 					//	Are we past the end of the file?
-					if ( m_AVISize <= 0 )
-					{
+					if ( m_AVISize <= 0 ){
 						//	Seek to end of file
 					}
-					
+					printf("TRIFFReader: end of file and failure\n");
+					retVal = false;
 					//	Handle stream chunks?
 					
 					//
 					printf("ParseAVIFIle::Unknown RIFF Chunk ");
+					//InfoAlert("Unknown RIFF Chunk");
 					DumpRIFFID(chunkID);
 					
 				}
@@ -347,14 +353,12 @@ bool TRIFFReader::ParseAVIFile()
 	}
 	
 	//	Complete initialization
-	if (m_HasAudio)
-	{
+	if (m_HasAudio){
 		if (m_AUDSHeader.BlockAlign == 0) 
 			m_AUDSHeader.BlockAlign = 1;
 		
 		//	Use float to avoid uint32 overflow
-		if (m_AUDSHeader.Rate)
-		{
+		if (m_AUDSHeader.Rate){
 			m_TotalAudioTime = (uint32) ((((float) m_AUDSHeader.ByteCount * (float)m_AUDSHeader.SamplesPerBlock * 1000.0)
 												   / (float)m_AUDSHeader.BlockAlign) / (float)m_AUDSHeader.Rate);
 		}
@@ -362,12 +366,18 @@ bool TRIFFReader::ParseAVIFile()
 			m_TotalAudioTime = 0;   
 	}
 	
-	#ifdef DEBUG
+	
+#ifdef DEBUG
 		printf("Total Video Chunks: %d\n", m_VideoFrameList->CountItems());
 		printf("Total Audio Chunks: %d\n", m_AudioFrameList->CountItems());
-	#endif
+#endif
 	
 	//	Return success or failure
+	if (retVal){
+		printf("TRIFFReader: end of file and success\n");
+	} else {
+		printf("TRIFFReader: end of file and failure\n");
+	}
 	return retVal;
 }
 
@@ -395,6 +405,10 @@ bool TRIFFReader::ReadVideoFrame(uint32 frameNum, void *buffer)
 	if (!m_HasVideo)
 		return retVal;
 		
+	printf("ReadVideoFrame:\n");
+		
+	printf("ReadVideoFrame: frameNum = %d, VideoFrameCount = %d\n",frameNum, VideoFrameCount());
+		
 	//	Make sure we will not overflow number of video frames
 	if (frameNum > VideoFrameCount() )
 		return retVal;
@@ -415,10 +429,10 @@ bool TRIFFReader::ReadVideoFrame(uint32 frameNum, void *buffer)
 			break;
 			
 		default:
-			#ifdef DEBUG
+#ifdef DEBUG
 				printf("Non-video chunk...\n");
 				DumpRIFFID(theFrame->ChunkID);
-			#endif
+#endif
 			return retVal;
 	}
 	
@@ -1083,8 +1097,7 @@ bool TRIFFReader::Readidx1Chunk(uint32 size)
 
 	//	Adjust offsets and get stream types
 	int32 streamNum = -1;
-	for (uint32 index = 0; index < m_IndexCount; index++)
-	{
+	for (uint32 index = 0; index < m_IndexCount; index++){
 		m_HeaderIndex[index].Offset += m_MoviChunkOffset;
 		
 		uint32 streamID = m_HeaderIndex[index].ChunkID & kRiff_FF00_Chunk;
@@ -1132,28 +1145,25 @@ bool TRIFFReader::Readidx1Chunk(uint32 size)
 		uint32 	streamType;
 		bool	streamOK;
 		
-		if (streamNum >= 0)
-		{ 
+		if (streamNum >= 0)	{ 
 			streamType = m_StreamType[streamNum];
 			streamOK   = m_StreamOK[streamNum];
    		}
-		else 
-		{ 
+		else { 
 			streamType = 0; 
 			streamOK   = false; 
 		}
-		
-		if (streamOK == false) 
-		{
+		// ABH cinepak error here
+
+#ifdef DEBUG
+		if (streamOK == false) {
 			printf("Readidx1Chunk::streamOK == false\n");
 			continue;
 		}
-			
+#endif			
 		//	Handle streamType
-		switch(streamType)
-		{
-			case kRiff_vids_Chunk:
-			{ 
+		switch(streamType){
+			case kRiff_vids_Chunk:{ 
 				//printf("idx1 vids stream...\n");					
 				retVal = Read00DCChunk(m_HeaderIndex[index].ChunkID, m_HeaderIndex[index].Offset, m_HeaderIndex[index].Length, streamNum);				
 			}
@@ -1167,7 +1177,7 @@ bool TRIFFReader::Readidx1Chunk(uint32 size)
 			break;
 			
 			default:
-				//printf ("Readidx1Chunk::Unknown Stream Type\n");
+				printf ("Readidx1Chunk::Unknown Stream Type\n");
 				break;
 		}
 	}
@@ -1365,9 +1375,33 @@ bool TRIFFReader::InitVideoCodec()
 		case RIFF_CVID: 
 			m_VideoCodec = new TCinepakCodec(this);
 			break;
+			
+		case RIFF_MJPG:
+		case RIFF_mJPG:
+		case RIFF_jpeg:
+		case RIFF_JPEG:
+			InfoAlert("Unhandled JPEG codec\n");
+			DumpRIFFID(m_VIDSHeader.Compression);				
+
+			return false;
+			break;
+			
+		case RIFF_iv31:
+		case RIFF_IV31:
+		case RIFF_iv32:
+		case RIFF_IV32:
+		case RIFF_iv41:
+		case RIFF_IV41:
+//		case RIFF_iv50:
+//		case RIFF_IV50:
+			InfoAlert("Unhandled Indeo codec\n");
+			DumpRIFFID(m_VIDSHeader.Compression);				
+
+			return false;
+			break;
 		
 		default:
-			//ErrorAlert("Unhandled CODEC.");
+			InfoAlert("Unhandled Video Codec");
 			
 			#ifdef DEBUG
 				printf("Unhandled CODEC: ");

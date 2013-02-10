@@ -54,7 +54,7 @@ AVIWindow::AVIWindow(BRect bounds, char *name) : BWindow(bounds, name, B_TITLED_
 	ASSERT(bitmap);
 	
 	//	Add a bitmap view
-	m_BitmapView = new TBitmapView(Bounds(), bitmap, true,  B_FOLLOW_LEFT | B_FOLLOW_TOP);	
+	m_BitmapView = new TBitmapView(Bounds(), "AVIView", bitmap, true,  B_FOLLOW_LEFT | B_FOLLOW_TOP);	
 	m_AVIView->AddChild(m_BitmapView);
 	
 	//	Inform AVIView
@@ -62,7 +62,8 @@ AVIWindow::AVIWindow(BRect bounds, char *name) : BWindow(bounds, name, B_TITLED_
 	m_BitmapView->MakeFocus(true);
 	
 	//	Show window
-	CenterWindow(this);
+// ABH CenterWindow not defined
+//	CenterWindow(this);
 	Show();
 }
 

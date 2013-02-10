@@ -52,7 +52,7 @@ SYSTEM_INCLUDE_PATHS= /boot/develop/lib/x86 /boot/develop/headers/cpp \
 #Editors Engines Sorter Media Transitions 
 
 LIBS= be root media translation tracker stdc++ midi \
-/boot/home/Desktop/UltraDV/so4/AVINodes.so \
+/boot/home/Desktop/UltraDV/so4/AVINodesShared.so \
 /boot/home/Desktop/UltraDV/so4/Engines.so /boot/home/Desktop/UltraDV/so4/Sorter.so \
 /boot/home/Desktop/UltraDV/so4/Media.so \
 /boot/home/Desktop/UltraDV/so4/Transitions.so \

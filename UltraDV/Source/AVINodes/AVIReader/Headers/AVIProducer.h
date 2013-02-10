@@ -145,8 +145,11 @@ class AVIProducer : public BBufferProducer, public BFileInterface
 					  		 const media_destination &destination, const media_format &format,
 					   		  char *out_name);
 		void 		Disconnect( const media_source &what, const media_destination &where);
-		
-		void 		EnableOutput(const media_source &what, bool enabled, int32 * change_tag);
+
+		// ABH 
+		// 3rd param deprecated
+		void	EnableOutput(const media_source &what, bool enabled, int32* _deprecated_);
+
 		
 		status_t 	SetBufferGroup( const media_source &for_source, BBufferGroup *group);
 		
@@ -159,6 +162,8 @@ class AVIProducer : public BBufferProducer, public BFileInterface
 		//	Thread Routines
 		static status_t		service_routine(void *data);
 		void				ServiceRoutine();
+		
+		// ABH
 		static status_t		run_routine(void *data);
 		void				RunRoutine();
 };

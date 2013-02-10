@@ -14,7 +14,7 @@
 
 
 //	Includes
-#include <TrinityDefs.h>
+// ABH does not exist #include <TrinityDefs.h>
 #include <OS.h>
 #include <Debug.h>
 #include <Buffer.h>
@@ -37,7 +37,11 @@
 //	Default Contructor
 //
 
-AVIViewer::AVIViewer() : BBufferConsumer(B_MEDIA_MULTISTREAM)
+// ABH 
+AVIViewer::AVIViewer() 
+	:	BMediaNode("AVIViewer"), 
+		BBufferConsumer(B_MEDIA_MULTISTREAM)
+
 {
 	printf("AVIViewer::AVIViewer\n");
 	
@@ -51,7 +55,7 @@ AVIViewer::AVIViewer() : BBufferConsumer(B_MEDIA_MULTISTREAM)
 //	Destructor
 //-------------------------------------------------------------------
 //
-//	Defualt Destructor
+//	Default Destructor
 //
 
 AVIViewer::~AVIViewer()

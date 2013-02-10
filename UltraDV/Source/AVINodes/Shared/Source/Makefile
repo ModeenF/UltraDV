@@ -2,7 +2,7 @@ NAME= ACTION
 TYPE= LIB
 SRCS= AVIUtils.cpp TAppleVideoCodec.cpp TAudioCodec.cpp TCinepakCodec.cpp TimedBufferQueue.cpp \
 TMSRLECodec.cpp TMSVideoCodec.cpp TPCMCodec.cpp TRGBCodec.cpp TRIFFReader.cpp TRIFFWriter.cpp \
-TVideoCodec.cpp
+TVideoCodec.cpp InfoAlert.cpp
 
 
 RSRCS=

@@ -1,0 +1,4 @@
+gcc -o "objects.x86-gcc4-release/AVIReader" 	objects.x86-gcc4-release/AVIAddOn.o objects.x86-gcc4-release/AVIApp.o objects.x86-gcc4-release/AVIProducer.o objects.x86-gcc4-release/AVIView.o objects.x86-gcc4-release/AVIViewer.o objects.x86-gcc4-release/AVIWindow.o   -L./  -L/boot/home/Desktop/UltraDV/so4  -L/boot/develop/lib/x86/gcc4/lib  /boot/home/Desktop/UltraDV/so4/AVINodesShared.so /boot/home/Desktop/UltraDV/so4/AVIWriter.so /boot/home/Desktop/UltraDV/so4/Media.so  -llibmedia  -lbe  -lroot  -lmedia  -ltranslation  -ltracker  -lstdc++  -lmidi 
+/boot/develop/abi/x86/gcc4/tools/gcc-4.6.3-haiku-121101/lib/gcc/i586-pc-haiku/4.6.3/../../../../i586-pc-haiku/bin/ld: cannot find -llibmedia
+collect2: ld returned 1 exit status
+make: *** [objects.x86-gcc4-release/AVIReader] Error 1

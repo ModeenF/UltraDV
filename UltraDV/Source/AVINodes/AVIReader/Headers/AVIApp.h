@@ -19,6 +19,10 @@
 #include <MediaRoster.h>
 #include <TimeSource.h>
 
+// ABH added
+#include "AVIProducer.h"
+#include "TimedBufferQueue.h"
+
 //	Class Definition
 class AVIApp : public BApplication, public BBufferConsumer
 {

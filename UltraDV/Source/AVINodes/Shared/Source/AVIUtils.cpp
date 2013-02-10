@@ -450,13 +450,14 @@ void DumpAUDSHeader(AVIAUDSHeader *theHeader)
 
 void DumpRIFFID(int32 theID)
 { 
-	#ifdef DEBUG
+printf("DumpRIFFID: %4X\n",theID);
+#ifdef DEBUG
 		printf("%c",     (char)((theID >> 24) & 0xff)   );
 		printf("%c",     (char)((theID >> 16) & 0xff)   );
 		printf("%c",     (char)((theID >>  8) & 0xff)   );
 		printf("%c(%x)", (char) (theID        & 0xff), theID);
-		printf("\n");
-	#endif
+		printf(".\n");
+#endif
 }
 
 //-------------------------------------------------------------------

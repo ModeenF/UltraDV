@@ -1,0 +1,7 @@
+TOpacityDialog.cpp missing many methods - GetDrawArea, SetTransparency
+GetDuration, GetTransparency
+TVisualCue - added above stubs to enable compile
+TRefFilter - removed dir support to get a compile
+TTransitionRate.h - missing file
+MuseumUtils.h - missing file
+

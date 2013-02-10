@@ -1,0 +1,344 @@
+/boot/develop/abi/x86/gcc4/tools/gcc-4.6.3-haiku-121101/lib/gcc/i586-pc-haiku/4.6.3/../../../../i586-pc-haiku/bin/ld: error in TimedBufferQueue.o(.eh_frame); no .eh_frame_hdr table will be created.
+TimedBufferQueue.o: In function `BTimedBufferQueue::BTimedBufferQueue(void)':
+TimedBufferQueue.cpp:(.text+0x1e): undefined reference to `__builtin_new'
+TimedBufferQueue.cpp:(.text+0x45): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x57): undefined reference to `__builtin_delete'
+TimedBufferQueue.cpp:(.text+0x87): undefined reference to `__builtin_delete'
+TimedBufferQueue.cpp:(.text+0x95): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0xad): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `BTimedBufferQueue::~BTimedBufferQueue(void)':
+TimedBufferQueue.cpp:(.text+0xff): undefined reference to `__builtin_delete'
+TimedBufferQueue.o: In function `BTimedBufferQueue::PushBuffer(BBuffer *, long long)':
+TimedBufferQueue.cpp:(.text+0x19d): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x1c1): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(.text+0x1e0): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x1f5): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x204): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x228): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x259): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x271): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `BTimedBufferQueue::PopFirstBuffer(long long *)':
+TimedBufferQueue.cpp:(.text+0x399): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x3c1): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(.text+0x3dd): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x3ec): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x410): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x431): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x449): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `BTimedBufferQueue::PeekFirstBufferAtOrAfter(long long, long long *)':
+TimedBufferQueue.cpp:(.text+0x621): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x649): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(.text+0x665): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x674): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x698): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x6b9): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x6d1): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `BTimedBufferQueue::RemoveBuffer(BBuffer *)':
+TimedBufferQueue.cpp:(.text+0x7ed): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x815): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(.text+0x831): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x840): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x864): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x885): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x89d): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `BTimedBufferQueue::FlushBefore(long long)':
+TimedBufferQueue.cpp:(.text+0x985): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x9ad): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(.text+0x9c9): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0x9d8): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0x9fc): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0xa1d): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0xa35): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `BTimedBufferQueue::FlushFromAndAfter(long long)':
+TimedBufferQueue.cpp:(.text+0xb1d): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0xb45): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(.text+0xb61): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0xb70): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0xb94): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.text+0xbb5): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.text+0xbcd): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> >::replace(unsigned long, unsigned long, char const *, unsigned long)':
+TimedBufferQueue.cpp:(.basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> >::gnu.linkonce.t.replace(unsigned long, unsigned long, char const *, unsigned long)+0x41): undefined reference to `__out_of_range(char const *)'
+TimedBufferQueue.cpp:(.basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> >::gnu.linkonce.t.replace(unsigned long, unsigned long, char const *, unsigned long)+0x9e): undefined reference to `__length_error(char const *)'
+TimedBufferQueue.o: In function `_Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::_M_create_node(pair<long long const, BBuffer *> const &)':
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t._M_create_node(pair<long long const, BBuffer *> const &)+0x45): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t._M_create_node(pair<long long const, BBuffer *> const &)+0x6d): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t._M_create_node(pair<long long const, BBuffer *> const &)+0x87): undefined reference to `__uncatch_exception'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t._M_create_node(pair<long long const, BBuffer *> const &)+0x8c): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t._M_create_node(pair<long long const, BBuffer *> const &)+0x95): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t._M_create_node(pair<long long const, BBuffer *> const &)+0xb8): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t._M_create_node(pair<long long const, BBuffer *> const &)+0xd9): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t._M_create_node(pair<long long const, BBuffer *> const &)+0xf1): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `_Rb_tree_node<pair<long long const, BBuffer *> > type_info function':
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__tft13_Rb_tree_node1Zt4pair2ZCxZP7BBuffer+0x44): undefined reference to `__rtti_si'
+TimedBufferQueue.o: In function `_Rb_tree_node_base type_info function':
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__tf18_Rb_tree_node_base+0x34): undefined reference to `__rtti_user'
+TimedBufferQueue.o: In function `operator new(unsigned long, void *)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__nw(unsigned long, void *)+0x25): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__nw(unsigned long, void *)+0x41): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__nw(unsigned long, void *)+0x54): undefined reference to `__check_eh_spec'
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__nw(unsigned long, void *)+0x61): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__nw(unsigned long, void *)+0x84): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__nw(unsigned long, void *)+0xa1): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__nw(unsigned long, void *)+0xb9): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `_buffer_queue_imp::_buffer_queue_imp(void)':
+TimedBufferQueue.cpp:(._buffer_queue_imp::gnu.linkonce.t.(void)+0x49): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._buffer_queue_imp::gnu.linkonce.t.(void)+0x79): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._buffer_queue_imp::gnu.linkonce.t.(void)+0x91): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `_buffer_queue_imp::~_buffer_queue_imp(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._17_buffer_queue_imp+0x46): undefined reference to `__builtin_delete'
+TimedBufferQueue.o: In function `multimap<long long, BBuffer *, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::~multimap(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._t8multimap4ZxZP7BBufferZt4less1ZxZt18realtime_allocator2ZP7BBufferZ19realtime_blocks_256+0x37): undefined reference to `__builtin_delete'
+TimedBufferQueue.o: In function `realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::allocate(unsigned long)':
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.allocate(unsigned long)+0x95): undefined reference to `__eh_alloc'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.allocate(unsigned long)+0xb5): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.allocate(unsigned long)+0xc1): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.allocate(unsigned long)+0xfd): undefined reference to `__cp_push_exception'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.allocate(unsigned long)+0x105): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.allocate(unsigned long)+0x135): undefined reference to `terminate(void)'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.allocate(unsigned long)+0x161): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.allocate(unsigned long)+0x179): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `multimap<long long, BBuffer *, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::multimap(void)':
+TimedBufferQueue.cpp:(.multimap<long long, BBuffer *, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(void)+0x45): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.multimap<long long, BBuffer *, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(void)+0x61): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.multimap<long long, BBuffer *, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(void)+0xb5): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.multimap<long long, BBuffer *, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(void)+0xcd): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `bad_alloc::bad_alloc(void)':
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.(void)+0x31): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.(void)+0x61): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.(void)+0x79): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `bad_alloc::bad_alloc(bad_alloc const &)':
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.(bad_alloc const &)+0x35): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.(bad_alloc const &)+0x65): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.(bad_alloc const &)+0x7d): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::init_object(void)':
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0xf9): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x117): undefined reference to `__eh_alloc'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x135): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x141): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x177): undefined reference to `__cp_push_exception'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x17f): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x1e7): undefined reference to `__builtin_new'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x219): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x22e): undefined reference to `__builtin_delete'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x271): undefined reference to `terminate(void)'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x2b6): undefined reference to `__builtin_delete'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x2c9): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::gnu.linkonce.t.init_object(void)+0x2e1): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `_Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::_Rb_tree(less<long long> const &, realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)':
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(less<long long> const &, realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0x51): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(less<long long> const &, realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0x89): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree<long long, pair<long long const, BBuffer *>, _Select1st<pair<long long const, BBuffer *> >, less<long long>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(less<long long> const &, realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0xa1): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256>::~realtime_allocator(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._t18realtime_allocator2Zt4pair2ZCxZP7BBufferZ19realtime_blocks_256+0x42): undefined reference to `__builtin_delete'
+TimedBufferQueue.o: In function `bad_alloc type_info function':
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__tf9bad_alloc+0x44): undefined reference to `__rtti_si'
+TimedBufferQueue.o: In function `exception::~exception(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._9exception+0x33): undefined reference to `__builtin_delete'
+TimedBufferQueue.o: In function `bad_alloc::what(void) const':
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.what(void) const+0x29): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.what(void) const+0x45): undefined reference to `__start_cp_handler'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.what(void) const+0x58): undefined reference to `__check_eh_spec'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.what(void) const+0x65): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.what(void) const+0x88): undefined reference to `__cp_pop_exception'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.what(void) const+0xa5): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.bad_alloc::gnu.linkonce.t.what(void) const+0xbd): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> >::~basic_string(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._t12basic_string3ZcZt18string_char_traits1ZcZt23__malloc_alloc_template1i0+0x43): undefined reference to `__builtin_delete'
+TimedBufferQueue.o: In function `runtime_error::runtime_error(runtime_error const &)':
+TimedBufferQueue.cpp:(.runtime_error::gnu.linkonce.t.(runtime_error const &)+0x49): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.runtime_error::gnu.linkonce.t.(runtime_error const &)+0x55): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.runtime_error::gnu.linkonce.t.(runtime_error const &)+0xa9): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.runtime_error::gnu.linkonce.t.(runtime_error const &)+0xc1): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `runtime_error::runtime_error(basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> > const &)':
+TimedBufferQueue.cpp:(.runtime_error::gnu.linkonce.t.(basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> > const &)+0x45): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.runtime_error::gnu.linkonce.t.(basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> > const &)+0x51): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.runtime_error::gnu.linkonce.t.(basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> > const &)+0xa5): undefined reference to `__throw'
+TimedBufferQueue.cpp:(.runtime_error::gnu.linkonce.t.(basic_string<char, string_char_traits<char>, __malloc_alloc_template<0> > const &)+0xbd): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `_Rb_tree_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256> >::_Rb_tree_base(realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)':
+TimedBufferQueue.cpp:(._Rb_tree_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0x3d): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0x6d): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256> >::gnu.linkonce.t.(realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0x85): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256>::area_ref::~area_ref(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._Q2t18realtime_allocator2Zt4pair2ZCxZP7BBufferZ19realtime_blocks_256_8area_ref+0x4f): undefined reference to `__builtin_delete'
+TimedBufferQueue.o:(.gnu.linkonce.d._vt.9exception+0x14): undefined reference to `exception::what(void) const'
+TimedBufferQueue.o: In function `exception type_info function':
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__tf9exception+0x34): undefined reference to `__rtti_user'
+TimedBufferQueue.o: In function `runtime_error type_info function':
+TimedBufferQueue.cpp:(.gnu.linkonce.t.__tf13runtime_error+0x44): undefined reference to `__rtti_si'
+TimedBufferQueue.o: In function `_Rb_tree_alloc_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256>, false>::~_Rb_tree_alloc_base(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._t19_Rb_tree_alloc_base3Zt4pair2ZCxZP7BBufferZt18realtime_allocator2ZP7BBufferZ19realtime_blocks_256b0+0x37): undefined reference to `__builtin_delete'
+TimedBufferQueue.o: In function `_Rb_tree_alloc_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256>, false>::_Rb_tree_alloc_base(realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)':
+TimedBufferQueue.cpp:(._Rb_tree_alloc_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256>, false>::gnu.linkonce.t.(realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0x35): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree_alloc_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256>, false>::gnu.linkonce.t.(realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0x65): undefined reference to `__throw'
+TimedBufferQueue.cpp:(._Rb_tree_alloc_base<pair<long long const, BBuffer *>, realtime_allocator<BBuffer *, realtime_blocks_256>, false>::gnu.linkonce.t.(realtime_allocator<pair<long long const, BBuffer *>, realtime_blocks_256> const &)+0x7d): undefined reference to `terminate(void)'
+TimedBufferQueue.o: In function `realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::~realtime_allocator(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._t18realtime_allocator2Zt13_Rb_tree_node1Zt4pair2ZCxZP7BBufferZ19realtime_blocks_256+0x42): undefined reference to `__builtin_delete'
+TimedBufferQueue.o: In function `realtime_allocator<_Rb_tree_node<pair<long long const, BBuffer *> >, realtime_blocks_256>::area_ref::~area_ref(void)':
+TimedBufferQueue.cpp:(.gnu.linkonce.t._._Q2t18realtime_allocator2Zt13_Rb_tree_node1Zt4pair2ZCxZP7BBufferZ19realtime_blocks_256_8area_ref+0x4f): undefined reference to `__builtin_delete'
+TMIDICue.o: In function `TMIDICue::Init()':
+TMIDICue.cpp:(.text+0x67b): undefined reference to `BMidiStore::BMidiStore()'
+TMIDICue.cpp:(.text+0x6cf): undefined reference to `BMidiStore::Import(entry_ref const*)'
+TMIDICue.o: In function `TMIDICue::MessageReceived(BMessage*)':
+TMIDICue.cpp:(.text+0xa0d): undefined reference to `BMidiSynthFile::Fade()'
+TMIDICue.cpp:(.text+0xa44): undefined reference to `BMidiSynthFile::UnloadFile()'
+TMIDICue.o: In function `TMIDICue::PlayMidiFile()':
+TMIDICue.cpp:(.text+0x10ed): undefined reference to `BMidiSynthFile::IsFinished() const'
+TMIDICue.o: In function `TMIDICue::PlayCue(unsigned long)':
+TMIDICue.cpp:(.text+0x11a7): undefined reference to `BMidiSynthFile::BMidiSynthFile()'
+TMIDICue.cpp:(.text+0x11cf): undefined reference to `BMidiSynthFile::LoadFile(entry_ref const*)'
+TMIDICue.o: In function `TMIDICue::PauseCue()':
+TMIDICue.cpp:(.text+0x1289): undefined reference to `BMidiSynthFile::Pause()'
+TMIDICue.o: In function `TMIDICue::ResumeCue()':
+TMIDICue.cpp:(.text+0x12b7): undefined reference to `BMidiSynthFile::Resume()'
+TMIDIEngine.o: In function `TMIDIEngine::TMIDIEngine(BMidiStore*)':
+TMIDIEngine.cpp:(.text+0x2b): undefined reference to `BMidiPort::BMidiPort(char const*)'
+TMIDIEngine.cpp:(.text+0x52): undefined reference to `BMidiPort::Open(char const*)'
+TMIDIEngine.cpp:(.text+0x6a): undefined reference to `BMidi::Connect(BMidi*)'
+TMIDIEngine.o: In function `TMIDIEngine::~TMIDIEngine()':
+TMIDIEngine.cpp:(.text+0xb6): undefined reference to `BMidi::Disconnect(BMidi*)'
+TMIDIEngine.o: In function `TMIDIEngine::Play()':
+TMIDIEngine.cpp:(.text+0x105): undefined reference to `BMidi::IsRunning() const'
+TMIDIEngine.o: In function `TMIDIEngine::Stop()':
+TMIDIEngine.cpp:(.text+0x14f): undefined reference to `BMidi::IsRunning() const'
+TMIDIEngine.o: In function `TMIDIEngine::Pause()':
+TMIDIEngine.cpp:(.text+0x197): undefined reference to `BMidi::IsRunning() const'
+TMovieCue.o: In function `TMovieCue::~TMovieCue()':
+TMovieCue.cpp:(.text+0x383): undefined reference to `TRIFFReader::~TRIFFReader()'
+TMovieCue.o: In function `TMovieCue::Init()':
+TMovieCue.cpp:(.text+0x568): undefined reference to `TRIFFReader::TRIFFReader(BFile*)'
+TMovieCue.o: In function `TMovieCue::InitVideoCodec()':
+TMovieCue.cpp:(.text+0xa09): undefined reference to `TRGBCodec::TRGBCodec(TRIFFReader*)'
+TMovieCue.cpp:(.text+0xa3c): undefined reference to `TAppleVideoCodec::TAppleVideoCodec(TRIFFReader*)'
+TMovieCue.cpp:(.text+0xa6f): undefined reference to `TMSVideoCodec::TMSVideoCodec(TRIFFReader*)'
+TMovieCue.cpp:(.text+0xaa2): undefined reference to `TMSRLECodec::TMSRLECodec(TRIFFReader*)'
+TMovieCue.cpp:(.text+0xad5): undefined reference to `TCinepakCodec::TCinepakCodec(TRIFFReader*)'
+TMovieCue.cpp:(.text+0xb16): undefined reference to `DumpRIFFID(long)'
+TMovieCue.o: In function `TMovieCue::InitAudioCodec()':
+TMovieCue.cpp:(.text+0xc44): undefined reference to `TPCMCodec::TPCMCodec(TRIFFReader*)'
+TMovieCue.o: In function `TMovieCue::LoadMovieFile(BMessage*)':
+TMovieCue.cpp:(.text+0x1437): undefined reference to `IsRIFFFile(BFile*)'
+TPictureCueEditor.o: In function `TPictureCueEditor::Init()':
+TPictureCueEditor.cpp:(.text+0x43f): undefined reference to `TPictureCueEditorView::TPictureCueEditorView(BBitmap*)'
+TRIFFWriter.o: In function `TRIFFWriter::~TRIFFWriter(void)':
+TRIFFWriter.cpp:(.text+0x50): undefined reference to `__builtin_delete'
+TRIFFWriter.o: In function `TRIFFWriter::InitAVIFile(void)':
+TRIFFWriter.cpp:(.text+0x1bd): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x27e): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x412): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x645): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.o: In function `TRIFFWriter::CompleteAVIFile(void)':
+TRIFFWriter.cpp:(.text+0x77d): undefined reference to `BStatable::GetSize(long long *) const'
+TRIFFWriter.cpp:(.text+0x8c6): undefined reference to `WriteAtIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x955): undefined reference to `WriteAtIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0xa7a): undefined reference to `WriteAtIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0xda4): undefined reference to `WriteAtIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0xe63): undefined reference to `BStatable::GetSize(long long *) const'
+TRIFFWriter.cpp:(.text+0xe91): undefined reference to `WriteAtIntLsb(BFile *, long, int)'
+TRIFFWriter.o: In function `TRIFFWriter::WriteRIFFChunk(unsigned long)':
+TRIFFWriter.cpp:(.text+0xfb5): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0xfc6): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0xfd8): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.o: In function `TRIFFWriter::WriteLISTChunk(unsigned long)':
+TRIFFWriter.cpp:(.text+0x1020): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1031): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.o: In function `TRIFFWriter::WriteavihChunk(void)':
+TRIFFWriter.cpp:(.text+0x107b): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1093): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.o: In function `TRIFFWriter::WriteStreamHeader(AVIStreamHeader *)':
+TRIFFWriter.cpp:(.text+0x10eb): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1103): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1116): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x112a): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x113e): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1152): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1166): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x117a): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x118e): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.o:TRIFFWriter.cpp:(.text+0x11a2): more undefined references to `WriteIntLsb(BFile *, long, int)' follow
+TRIFFWriter.o: In function `TRIFFWriter::WritevidsChunk(void)':
+TRIFFWriter.cpp:(.text+0x12bb): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x12d3): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x12e4): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x12f5): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1306): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x131a): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.o:TRIFFWriter.cpp:(.text+0x132e): more undefined references to `WriteIntLsb(BFile *, long, int)' follow
+TRIFFWriter.o: In function `TRIFFWriter::WritevidsChunk(void)':
+TRIFFWriter.cpp:(.text+0x133f): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1350): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1361): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1372): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1383): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1394): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x13a0): undefined reference to `DumpVIDSHeader(AVIVIDSHeader *)'
+TRIFFWriter.o: In function `TRIFFWriter::WriteaudsChunk(void)':
+TRIFFWriter.cpp:(.text+0x13ef): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x13fe): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1412): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1426): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1437): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1448): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.o:TRIFFWriter.cpp:(.text+0x145c): more undefined references to `WriteIntLsb(BFile *, long, int)' follow
+TRIFFWriter.o: In function `TRIFFWriter::Writeidx1Chunk(void)':
+TRIFFWriter.cpp:(.text+0x150f): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1521): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x161f): undefined reference to `ReadIntMsb(BFile *, int)'
+TRIFFWriter.cpp:(.text+0x1641): undefined reference to `ReadIntLsb(BFile *, int)'
+TRIFFWriter.cpp:(.text+0x1717): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x172b): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x173f): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1753): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1855): undefined reference to `WriteAtIntLsb(BFile *, long, int)'
+TRIFFWriter.o: In function `TRIFFWriter::WriteAVIHeader(void)':
+TRIFFWriter.cpp:(.text+0x1891): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x18a5): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x18b9): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x18cd): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x18e1): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.o:TRIFFWriter.cpp:(.text+0x18f5): more undefined references to `WriteIntLsb(BFile *, long, int)' follow
+TRIFFWriter.o: In function `TRIFFWriter::Write00DCChunk(unsigned long, unsigned long, void *)':
+TRIFFWriter.cpp:(.text+0x19d2): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x19e3): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.o: In function `TRIFFWriter::Init00WBChunk(unsigned long, unsigned long)':
+TRIFFWriter.cpp:(.text+0x1a59): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1a6a): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TRIFFWriter.o: In function `TRIFFWriter::Write00WBChunk(unsigned long, unsigned long, void *)':
+TRIFFWriter.cpp:(.text+0x1ab2): undefined reference to `WriteIntMsb(BFile *, long, int)'
+TRIFFWriter.cpp:(.text+0x1ac3): undefined reference to `WriteIntLsb(BFile *, long, int)'
+TTransitionMenuLooper.o: In function `TTransitionMenuLooper::MessageReceived(BMessage*)':
+TTransitionMenuLooper.cpp:(.text+0xfb7): undefined reference to `TVisualCue::GetDuration()'
+TTransitionMenuLooper.cpp:(.text+0xfd5): undefined reference to `TVisualCue::GetDuration()'
+TTransitionMenuLooper.cpp:(.text+0x1019): undefined reference to `TVisualCue::GetDuration()'
+TTransitionMenuLooper.cpp:(.text+0x1037): undefined reference to `TVisualCue::GetDuration()'
+TTransitionMenuLooper.cpp:(.text+0x10dd): undefined reference to `TVisualCue::GetDuration()'
+TTransitionMenuLooper.o:TTransitionMenuLooper.cpp:(.text+0x10fb): more undefined references to `TVisualCue::GetDuration()' follow
+TVideoCaptureView.o: In function `TVideoCaptureView::TVideoCaptureView(BRect, TVideoCaptureWindow*)':
+TVideoCaptureView.cpp:(.text+0x2ab): undefined reference to `BTimedBufferQueue::BTimedBufferQueue()'
+TVideoCaptureView.o: In function `TVideoCaptureView::TVideoCaptureView(BRect, TVideoCaptureWindow*)':
+TVideoCaptureView.cpp:(.text+0x76a): undefined reference to `BTimedBufferQueue::BTimedBufferQueue()'
+TVideoCaptureView.o: In function `TVideoCaptureView::~TVideoCaptureView()':
+TVideoCaptureView.cpp:(.text+0xabc): undefined reference to `BTimedBufferQueue::PopFirstBuffer(long long*)'
+TVideoCaptureView.cpp:(.text+0xadd): undefined reference to `BTimedBufferQueue::HasBuffers()'
+TVideoCaptureView.cpp:(.text+0xafa): undefined reference to `BTimedBufferQueue::~BTimedBufferQueue()'
+TVideoCaptureView.o: In function `TVideoCaptureView::~TVideoCaptureView()':
+TVideoCaptureView.cpp:(.text+0xddb): undefined reference to `BTimedBufferQueue::PopFirstBuffer(long long*)'
+TVideoCaptureView.cpp:(.text+0xdfc): undefined reference to `BTimedBufferQueue::HasBuffers()'
+TVideoCaptureView.cpp:(.text+0xe19): undefined reference to `BTimedBufferQueue::~BTimedBufferQueue()'
+TVideoCaptureView.o: In function `TVideoCaptureView::BufferReceived(BBuffer*)':
+TVideoCaptureView.cpp:(.text+0x1401): undefined reference to `BTimedBufferQueue::PushBuffer(BBuffer*, long long)'
+TVideoCaptureView.o: In function `TVideoCaptureView::DisplayThread()':
+TVideoCaptureView.cpp:(.text+0x217f): undefined reference to `BTimedBufferQueue::PopFirstBuffer(long long*)'
+TVideoCaptureView.cpp:(.text+0x23d5): undefined reference to `BTimedBufferQueue::PushBuffer(BBuffer*, long long)'
+TVideoPreviewView.o: In function `TVideoPreviewView::BufferReceived(BBuffer*)':
+TVideoPreviewView.cpp:(.text+0xddd): undefined reference to `BTimedBufferQueue::PushBuffer(BBuffer*, long long)'
+TVideoPreviewView.o: In function `TVideoPreviewView::Connected(media_source const&, media_destination const&, media_format const&, media_input*)':
+TVideoPreviewView.cpp:(.text+0x107a): undefined reference to `BTimedBufferQueue::BTimedBufferQueue()'
+TVideoPreviewView.o: In function `TVideoPreviewView::Disconnected(media_source const&, media_destination const&)':
+TVideoPreviewView.cpp:(.text+0x12ff): undefined reference to `BTimedBufferQueue::PopFirstBuffer(long long*)'
+TVideoPreviewView.cpp:(.text+0x1320): undefined reference to `BTimedBufferQueue::HasBuffers()'
+TVideoPreviewView.cpp:(.text+0x133d): undefined reference to `BTimedBufferQueue::~BTimedBufferQueue()'
+TVideoPreviewView.o: In function `TVideoPreviewView::DisplayThread()':
+TVideoPreviewView.cpp:(.text+0x1b70): undefined reference to `BTimedBufferQueue::PopFirstBuffer(long long*)'
+TVideoPreviewView.cpp:(.text+0x1da3): undefined reference to `BTimedBufferQueue::PushBuffer(BBuffer*, long long)'
+collect2: ld returned 1 exit status

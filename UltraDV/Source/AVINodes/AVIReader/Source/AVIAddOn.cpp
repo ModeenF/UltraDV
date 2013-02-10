@@ -31,11 +31,13 @@
 //	Instantiation function used by media kit
 //
 
-BMediaAddOn *make_media_addon(image_id addOnID)
+// ABH updated
+/*
+extern "C" _EXPORT BMediaAddOn *make_media_addon(image_id addOnID)
 {
 	return new AVIAddOn(addOnID);
 }
-
+*/
 
 //-------------------------------------------------------------------
 //	Constructor

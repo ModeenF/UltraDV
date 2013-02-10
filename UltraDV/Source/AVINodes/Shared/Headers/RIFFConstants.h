@@ -27,6 +27,12 @@ const uint32 kRiff_avih_Chunk	= 0x61766968;	//	'avih'
 const uint32 kRiff_strd_Chunk 	= 0x73747264;	//	'strd'
 const uint32 kRiff_strh_Chunk 	= 0x73747268;	//	'strh'
 const uint32 kRiff_strf_Chunk 	= 0x73747266;	//	'strf'
+const uint32 kRiff_strn_Chunk	= 0x7374726E;	// 	'strn' stream name ABH
+#ifdef ABH
+const uint32 kRiff_strl_Chunk	= 				//	'strl' stream list
+const uint32 kRiff_strf_Chunk	=				//	'strf' stream format
+#endif
+
 const uint32 kRiff_vedt_Chunk	= 0x76656474;	//	'vedt'
 const uint32 kRiff_JUNK_Chunk	= 0x4A554E4B;	//	'JUNK'
 const uint32 kRiff_idx1_Chunk 	= 0x69647831;	//	'idx1'

@@ -27,6 +27,8 @@
 #include "AppUtils.h"
 #include "AVIProducer.h"
 
+// ABH added for FILE_OPEN_MSG
+#include "MenuMessages.h"
 
 
 #include "AVIApp.h"
@@ -100,8 +102,7 @@ AVIApp::AVIApp() : BApplication("application/x-vnd.mediapede.AVIApp"), BMediaNod
 	//	Connect to Media Server
 	m_MediaRoster = BMediaRoster::Roster(); 
 	 
-	if (!m_MediaRoster) 
-	{ 
+	if (!m_MediaRoster) { 
 		// the Media Server appears to be dead -- handle that here
 		printf("MediaRoster failure!\n");
 		be_app->PostMessage(B_QUIT_REQUESTED);
@@ -115,8 +116,11 @@ AVIApp::AVIApp() : BApplication("application/x-vnd.mediapede.AVIApp"), BMediaNod
 	m_MediaFormat.u.multistream.max_bit_rate 	= 1;
 	m_MediaFormat.u.multistream.avg_chunk_size 	= 1;
 	m_MediaFormat.u.multistream.max_chunk_size 	= 1;
-	m_MediaFormat.u.multistream.flags			= m_MediaFormat.u.multistream.B_HEADER_HAS_FLAGS | m_MediaFormat.u.multistream.B_CLEAN_BUFFERS | m_MediaFormat.u.multistream.B_HOMOGENOUS_BUFFERS;
-	m_MediaFormat.u.multistream.format 			= m_MediaFormat.u.multistream.B_AVI;
+	m_MediaFormat.u.multistream.flags = 
+		m_MediaFormat.u.multistream.B_HEADER_HAS_FLAGS | 
+		m_MediaFormat.u.multistream.B_CLEAN_BUFFERS | 
+		m_MediaFormat.u.multistream.B_HOMOGENOUS_BUFFERS;
+	m_MediaFormat.u.multistream.format = m_MediaFormat.u.multistream.B_AVI;
 		
 	m_MediaFormat.u.multistream.u.avi.us_per_frame 	= 0;	
 	m_MediaFormat.u.multistream.u.avi.width 		= 0;
@@ -148,7 +152,7 @@ AVIApp::AVIApp() : BApplication("application/x-vnd.mediapede.AVIApp"), BMediaNod
 	m_AVIProducer = new AVIProducer();
 	m_MediaRoster->RegisterNode(m_AVIProducer);
 		
-	//	Create drawing thread
+	//	Create drawing thr
 	int drawPrio = suggest_thread_priority(B_VIDEO_PLAYBACK, 30, 1000, 5000);
 	m_RunThread = spawn_thread(run_routine, "AVIConsumer:Run", drawPrio, this);
 	resume_thread(m_RunThread);	
@@ -201,33 +205,50 @@ status_t AVIApp::InitNodes(entry_ref &fileRef)
 	
 	//	Sniff Ref
 	BMimeType outMimeType;
-	float 	  outCapability;
+	float 	  outCapability=0;
 	retVal = m_MediaRoster->SniffRefFor(m_AVIProducer->Node(), fileRef, &outMimeType, &outCapability);
-	if(retVal != B_OK)
-	{
-		printf("SniffRefFor failure. Node ID: %d\n", m_AVIProducer->Node().node);	
-		printf("Error: %c\n", strerror(retVal));
-		be_app->PostMessage(B_QUIT_REQUESTED);
+	if(retVal != B_OK){
+		printf("SniffRefFor failure - Node ID: %d\n", m_AVIProducer->Node().node);	
+		printf("Error: %s - %d\n", strerror(retVal), retVal);
+		
+		// ABH should recover and try another file		
+//		be_app->PostMessage(FILE_OPEN_MSG); // ABH was B_QUIT_REQUESTED
 		return retVal;
 	}
 	
 	//	We have a good ref.  Set it for the node
-	bigtime_t outDuration;
+	bigtime_t outDuration=0;
 	retVal = m_MediaRoster->SetRefFor(m_AVIProducer->Node(), fileRef, false, &outDuration);
-	if(retVal != B_OK)
-	{
-		printf("SetRefFor failure. Node ID: %d\n", m_AVIProducer->Node().node);			
-		printf("Error: %c\n", strerror(retVal));
+	
+	if (retVal == B_BAD_PORT_ID)
+		printf("SetRefFor: bad port if\n");
+	if (retVal == B_TIMED_OUT)
+		printf("SetRefFor: timed out\n");
+	if (retVal == B_WOULD_BLOCK)
+		printf("SetRefFor: would block\n");	
+		
+	if(retVal == B_OK || retVal == 1){	
+		// SetRefFor is returning '1', which is not failure!
+		printf("SetRefFor failure - Node ID: %d\n", m_AVIProducer->Node().node);			
+		printf("Error: %s - %d\n", strerror(retVal), retVal);
+	} else {
+		// is fatal
+		printf("SetRefFor failure - Node ID: %d\n", m_AVIProducer->Node().node);			
+		printf("Error: %s - %d\n", strerror(retVal), retVal);
 		be_app->PostMessage(B_QUIT_REQUESTED);
 		return retVal;
 	}
+
+		outDuration = 0;	// ABH remove this! Just a temp hack!
+		
+		printf("SetRefFor: OutDuration = %ld\n",outDuration);
+	
 	
 	//	Get the free outputs for the AVIProducer
 	int32 			numOutputs = 1; 
 	int32 			numFreeOutputs = 0; 
 	retVal = m_MediaRoster->GetFreeOutputsFor(m_AVIProducer->Node(), &m_From, numOutputs, &numFreeOutputs);
-	if (retVal < 0 || numFreeOutputs < 1)
-	{
+	if (retVal < 0 || numFreeOutputs < 1){
 		printf("The video input is busy!\n");
 		be_app->PostMessage(B_QUIT_REQUESTED);
 		return retVal;
@@ -237,8 +258,7 @@ status_t AVIApp::InitNodes(entry_ref &fileRef)
 	int32 		numInputs = 1; 
 	int32 		numFreeInputs = 0; 
 	retVal = m_MediaRoster->GetFreeInputsFor( Node(), &m_To, numInputs, &numFreeInputs);
-	if (retVal < 0 || numFreeInputs < 1)
-	{
+	if (retVal < 0 || numFreeInputs < 1){
 		printf("The video output is busy!\n");
 		be_app->PostMessage(B_QUIT_REQUESTED);
 		return retVal;
@@ -246,8 +266,7 @@ status_t AVIApp::InitNodes(entry_ref &fileRef)
 	
 	//	Now connect to the proper output
 	retVal = m_MediaRoster->Connect(m_From.source, m_To.destination, &m_From.format, &m_From, &m_To);	
-	if (retVal != B_OK)
-	{
+	if (retVal != B_OK){
 		printf("Connect failure!\n");
 
 		//	Exit
@@ -257,8 +276,7 @@ status_t AVIApp::InitNodes(entry_ref &fileRef)
 
 	//	Create time source
 	retVal = m_MediaRoster->GetSystemTimeSource(&m_TimeSourceNode);	
-	if (retVal != B_OK)
-	{
+	if (retVal != B_OK){
 		printf("GetSystemTimeSource failure!\n");
 		be_app->PostMessage(B_QUIT_REQUESTED);
 		return retVal;
@@ -266,8 +284,7 @@ status_t AVIApp::InitNodes(entry_ref &fileRef)
 	
 	//	Set AVIProducer time source
 	retVal = m_MediaRoster->SetTimeSourceFor(m_AVIProducer->Node().node, m_TimeSourceNode.node);
-	if (retVal != B_OK)
-	{
+	if (retVal != B_OK){
 		printf("Producer SetTimeSourceFor failure!\n");				
 		be_app->PostMessage(B_QUIT_REQUESTED);
 		return retVal;
@@ -327,9 +344,9 @@ void AVIApp::MessageReceived(BMessage* message)
 	switch(message->what)
 	{											
 		//	Show Open Dialog
-		//case FILE_OPEN_MSG:
-		//	ShowFileOpenPanel();
-		//	break;
+		case FILE_OPEN_MSG:
+			ShowFileOpenPanel();
+			break;
 
 		//	Quit app if no editors are open
 		case B_CANCEL:
@@ -359,8 +376,7 @@ status_t AVIApp::HandleMessage(int32 message, const void *data, size_t size)
 		default:
 			{
 				if ( (BBufferConsumer::HandleMessage(message, data, size)) && 
-					 (BMediaNode::HandleMessage(message, data, size)) )
-				{				
+					 (BMediaNode::HandleMessage(message, data, size)) ){				
 					//printf("AVIApp::HandleBadMessage\n");
 					BMediaNode::HandleBadMessage(message, data, size); 
 				}
@@ -393,49 +409,47 @@ void AVIApp::RefsReceived(BMessage *message)
 	
 	//	Initalize nodes
 	retVal = InitNodes(fileRef);
-	if (retVal != B_OK)
-	{
+	if (retVal != B_OK){
 		printf("InitNode failure.\n");
-		be_app->PostMessage(B_QUIT_REQUESTED);
+		// ABH need to recover from failure here!
+		
+		be_app->PostMessage(FILE_OPEN_MSG); // ABH was B_QUIT_REQUESTED
 		return;
-	}
+	} else {
 			
 
-	//	Start playback
-	bigtime_t start_delay = 0;
-	BMediaRoster::Roster()->GetStartLatencyFor(m_TimeSourceNode, &start_delay);
-	start_delay += estimate_max_scheduling_latency(find_thread(NULL));
+		//	Start playback
+		bigtime_t start_delay = 0;
+		BMediaRoster::Roster()->GetStartLatencyFor(m_TimeSourceNode, &start_delay);
+		start_delay += estimate_max_scheduling_latency(find_thread(NULL));
 
-	bigtime_t perf = system_time() + start_delay;
-	bigtime_t real = BTimeSource::RealTime();
+		bigtime_t perf = system_time() + start_delay;
+		bigtime_t real = BTimeSource::RealTime();
 	
-	retVal = m_MediaRoster->StartNode(m_To.node, perf);
-	if (retVal < B_OK) 
-	{
-		printf("Couldn't start AVIProducer!\n");
-		return;
-	}
+		retVal = m_MediaRoster->StartNode(m_To.node, perf);
+		if (retVal < B_OK) 	{
+			printf("Couldn't start AVIProducer!\n");
+			return;
+		}
 	
-	retVal = m_MediaRoster->StartNode(m_From.node, perf);
-	if (retVal < B_OK) 
-	{
-		printf("Couldn't start AVIConsumer!\n");
-		return;
-	}
+		retVal = m_MediaRoster->StartNode(m_From.node, perf);
+		if (retVal < B_OK) 	{
+			printf("Couldn't start AVIConsumer!\n");
+			return;
+		}
 	
-	//	workaround for possibly broken Now()
-	retVal = m_MediaRoster->SeekNode(m_TimeSourceNode, perf-start_delay, real);
-	if (retVal < B_OK) 
-	{
-		printf("Couldn't Seek() TimeSource!\n");
-		return;
-	}
+		//	workaround for possibly broken Now()
+		retVal = m_MediaRoster->SeekNode(m_TimeSourceNode, perf-start_delay, real);
+		if (retVal < B_OK) 	{
+			printf("Couldn't Seek() TimeSource!\n");
+			return;
+		}
 	
-	retVal = m_MediaRoster->StartNode(m_TimeSourceNode, real);
-	if (retVal < B_OK) 
-	{
-		printf("Couldn't start TimeSource!\n");
-		return;
+		retVal = m_MediaRoster->StartNode(m_TimeSourceNode, real);
+		if (retVal < B_OK) 	{
+			printf("Couldn't start TimeSource!\n");
+			return;
+		}
 	}
 }
 
@@ -455,8 +469,7 @@ void AVIApp::ShowFileOpenPanel()
 	// Otherwise, create the panel	
 	if (m_FileOpenPanel)
 		m_FileOpenPanel->Show();
-	else
-	{
+	else {
 		// Create a RefFilter for a "video" type
 		//TRefFilter *refFilter = new TRefFilter(kVideoFilter);
 
@@ -472,10 +485,14 @@ void AVIApp::ShowFileOpenPanel()
 	 	m_FileOpenPanel->SetPanelDirectory(&parentDir);
 	 		
 		// Center Panel
-		CenterWindow(m_FileOpenPanel->Window());				
+// ABH CenterWindow not defined
+//		CenterWindow(m_FileOpenPanel->Window());				
+	
+	// ABH hack 
+	((AVIApp *)be_app)->ShowFileOpenPanel();
 	}
 	
-	m_FileOpenPanel->Show();	
+//	m_FileOpenPanel->Show();	// ABH show twice??
 }
 
 
@@ -589,7 +606,7 @@ void AVIApp::DisposeInputCookie(int32 cookie)
 
 void AVIApp::BufferReceived(BBuffer *buffer)
 {
-	BBufferConsumer::BufferReceived(buffer);
+	// ABH virtual methhod cannot be called! BBufferConsumer::BufferReceived(buffer);
 	
 	m_BufferQueue->PushBuffer(buffer, buffer->Header()->start_time);	
 }
@@ -639,7 +656,8 @@ status_t AVIApp::GetLatencyFor( const media_destination &for_whom, bigtime_t *ou
 status_t AVIApp::Connected( const media_source &producer, const media_destination &whichInput,
 							const media_format &format, media_input *outInput)
 {
-	BBufferConsumer::Connected(producer, whichInput, format, outInput);
+	// ABH virtual method cannot be called! 
+	// BBufferConsumer::Connected(producer, whichInput, format, outInput);
 	
 	BAutolock lock(m_Lock);
 	
@@ -691,7 +709,8 @@ status_t AVIApp::Connected( const media_source &producer, const media_destinatio
 							
 void AVIApp::Disconnected( const media_source &producer, const media_destination & where)
 {
-	BBufferConsumer::Disconnected(producer, where);
+	// ABH virtual method cannot be called!
+	// BBufferConsumer::Disconnected(producer, where);
 	
 	m_Connected = false;
 	

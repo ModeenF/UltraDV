@@ -15,7 +15,7 @@
 #pragma once
 
 //	Includes
-#include <TrinityDefs.h>
+// ABH include file does not exist #include <TrinityDefs.h>
 #include <BufferConsumer.h>
 
 //#include "AVINodeTypes.h"
@@ -30,7 +30,7 @@
 class AVIViewer : public BBufferConsumer
 {
 	public:
-		AVIViewer();
+		AVIViewer(); 
 		~AVIViewer();
 		
 
