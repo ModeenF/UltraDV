@@ -1,3 +1,5 @@
+This is now a read only repository. For development go to https://github.com/Barrett17/UltraDV
+
 UltraDV
 =======
 
